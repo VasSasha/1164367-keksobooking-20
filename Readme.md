@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александра Васина](https://up.htmlacademy.ru/javascript/20/user/1164367).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Александрович](https://htmlacademy.ru/profile/id1378855).
 
 ---
 

@@ -11,11 +11,11 @@ var getArray = function(arr) {
 	var newArr = [];
  for(var i = 0; i < randomNumber; i++){
 	newArr.push(arr[i]);
- } return newArr;
+ } return newArr; 
 }
 var location = {
-		X: ,
-		Y:
+		x: ,
+		y:
 	}
 var createMassive = function () {
     var advertisments = [];
@@ -23,7 +23,7 @@ var createMassive = function () {
     var InformationForPost = {
 	avatar:'img/avatars/user0' + i + '.png',
 	title:'заголовок предложения',
-	address: location.X + location.Y,
+	address: location.x + location.y,
 	price:500 + 'USD',
 	type:'flat',
 	rooms: 3, 

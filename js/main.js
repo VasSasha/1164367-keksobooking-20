@@ -7,10 +7,10 @@ var features = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditio
 var time = ['12:00', '13:00', '14:00'];
 var photos = ["http://o0.github.io/assets/images/tokyo/hotel1.jpg", "http://o0.github.io/assets/images/tokyo/hotel2.jpg", "http://o0.github.io/assets/images/tokyo/hotel3.jpg"];
 var getArray = function(arr) {
-	var randomNumber = getRandomElement(0, arr.length - 1);
+	var randomNumber = getRandomElement(2, arr.length - 1);
 	var newArr = [];
  for(var i = 0; i < randomNumber; i++){
-	arr.push(arr[i]);
+	newArr.push(arr[i]);
  } return newArr;
 }
 var createMassive = function () {

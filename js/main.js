@@ -33,6 +33,7 @@ var createMassive = function () {
       features: getArray(features),
       description: 'строка с описанием',
       photos: getArray(photos),
+      location: location
     };
     advertisments.push(informationForPost);
   }
@@ -45,9 +46,9 @@ var renderAdvertisments = function () {
   var template = document.querySelector('#pin').content;
   var pinWidth = 40;
   var pinHeight = 40;
-  for (i = 0; i < 8; i++) {
+  for (var i = 0; i < 8; i++) {
     var newAdd = template.cloneNode(true);
-    var btn = newAdd.querySelector('.map_pin');
+    var btn = newAdd.querySelector('.map__pin');
     var img = newAdd.querySelector('img');
     btn.style.top = advertisments[i].location.y - pinHeight;
     btn.style.left = advertisments[i].location.x - pinWidth;

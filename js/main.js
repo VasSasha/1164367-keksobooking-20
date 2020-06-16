@@ -17,7 +17,7 @@ var advertisments = [];
 var createMassive = function () {
   for (var i = 1; i <= 8; i++) {
     var location = {
-      x: Math.random() * 100,
+      x: Math.random() * 200,
       y: 130 + Math.random() * 500
     };
     var informationForPost = {
@@ -48,14 +48,15 @@ var renderAdvertisments = function () {
   var pinHeight = 40;
   for (var i = 0; i < 8; i++) {
     var newAdd = template.cloneNode(true);
+    var mapPins = document.querySelector('.map__pins');
     var btn = newAdd.querySelector('.map__pin');
     var img = newAdd.querySelector('img');
-    btn.style.top = advertisments[i].location.y - pinHeight;
-    btn.style.left = advertisments[i].location.x - pinWidth;
+    btn.style.top = advertisments[i].location.y - pinHeight + 'px';
+    btn.style.left = advertisments[i].location.x - pinWidth + 'px';
     img.src = advertisments[i].avatar;
     img.alt = advertisments[i].title;
-    fragment.appendChild(btn);
-    fragment.appendChild(img);
+    fragment.appendChild(newAdd);
+    mapPins.appendChild(fragment);
   }
 };
 renderAdvertisments();

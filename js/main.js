@@ -56,8 +56,8 @@ var renderAdvertisments = function () {
     img.src = advertisments[i].avatar;
     img.alt = advertisments[i].title;
     fragment.appendChild(newAdd);
-    mapPins.appendChild(fragment);
   }
+   mapPins.appendChild(fragment);
 };
 renderAdvertisments();
 

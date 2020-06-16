@@ -13,14 +13,14 @@ var getArray = function(arr) {
 	newArr.push(arr[i]);
  } return newArr; 
 }
-var location = {
-		x: ,
-		y:
-	}
 var createMassive = function () {
     var advertisments = [];
     for(var i = 1; i <= 8; i++){
-    var InformationForPost = {
+    var location = {
+		x:Math.random() * 100,
+		y:130 + Math.random() * 629
+	}
+    var informationForPost = {
 	avatar:'img/avatars/user0' + i + '.png',
 	title:'заголовок предложения',
 	address: location.x + ', ' + location.y,
@@ -33,7 +33,22 @@ var createMassive = function () {
 	features: getArray(features),
 	description:'строка с описанием',
 	photos: getArray(photos),
-  };
-       advertisments.push (InformationForPost); 
+  }
+    advertisments.push (informationForPost); 
     }
+} return advertisments;
+var map = document.querySelector('.map');
+map.classList.remove('map--faded');
+var renderAdvertisments = function() {
+	var mapPins = document.querySelector('.map__pins');
+	var fragment = document.createDocumentFragment();
+	for(i = 0; i < 8; i++) {
+	  var template = document.querySelector('#pin');
+	  var newAdd = template.cloneNode(true);
+	  var img = newAdd.querySelector('img');
+	  img.setAttribute('style', advertisments[i].address);
+	  img.setAttribute('src', advertisments[i].avatar);
+	  img.setAttribute('alt', advertisments[i].title);
+	  mapPins.appendChild(fragment);
+	}
 }

@@ -97,11 +97,11 @@ var addAdvertismentCard = function () {
   newOffer.querySelector('.popup__text--time').textContent = 'Заезд после' + ' ' + advertisments[0].checkin + ', выезд до ' + advertisments[0].checkout;
   newOffer.querySelector('.popup__features').textContent = advertisments[0].features;
   newOffer.querySelector('.popup__description').textContent = advertisments[0].description;
-  newOffer.querySelector('.popup__photos').src = advertisments[0].photos;
+  newOffer.querySelector('.popup__photos').src = advertisments[0].photos[0];
     if (photos.length > 1) {
   var blockPhotos = document.querySelector('.popup__photos');
    var fragment = document.createDocumentFragment();
-   for (var i = 0; i < photos.length; i++) {
+   for (var i = 1; i < photos.length; i++) {
     var image = document.createElement('img');
     image.src = photos[i];
     fragment.appendChild(image);

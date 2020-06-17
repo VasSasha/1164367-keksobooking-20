@@ -9,7 +9,7 @@ var getRandomElement = function (arr) {
   return arr[index];
 };
 // возвращается массив случайной длины из полученного массива
-var getRandomSubarrey = function (arr) {
+var getRandomSubarray = function (arr) {
   var randomNumber = Math.floor(1 + Math.random() * ((arr.length - 1) - 1));
   var newArr = [];
   for (var i = 0; i < randomNumber; i++) {
@@ -17,7 +17,7 @@ var getRandomSubarrey = function (arr) {
   } return newArr;
 };
 var mapPins = document.querySelector('.map__pins');
-// генирируются данные для отображения 
+// генирируются данные для отображения
 var createArrayOfAdvertisments = function () {
   var advertisments = [];
   for (var i = 1; i <= 8; i++) {
@@ -30,14 +30,14 @@ var createArrayOfAdvertisments = function () {
       title: 'заголовок предложения',
       address: location.x + ', ' + location.y,
       price: 500,
-      type: getRandomSubarrey(TYPES),
+      type: getRandomSubarray(TYPES),
       rooms: Math.round(Math.random() * 10) + 1,
       guests: Math.round(Math.random() * 10) + 1,
       checkin: getRandomElement(TIMES),
       checkout: getRandomElement(TIMES),
-      features: getRandomSubarrey(FEATURES),
+      features: getRandomSubarray(FEATURES),
       description: 'строка с описанием',
-      photos: getRandomSubarrey(PHOTOS),
+      photos: getRandomSubarray(PHOTOS),
       location: location
     };
     advertisments.push(advertisment);
@@ -45,7 +45,7 @@ var createArrayOfAdvertisments = function () {
 };
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
-// отображаются метки, заполненные данными массива 
+// отображаются метки, заполненные данными массива
 var renderAdvertisments = function () {
   var advertisments = createArrayOfAdvertisments();
   createArrayOfAdvertisments();
@@ -66,5 +66,3 @@ var renderAdvertisments = function () {
   mapPins.appendChild(fragment);
 };
 renderAdvertisments();
-
- 

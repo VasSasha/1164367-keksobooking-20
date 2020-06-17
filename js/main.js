@@ -82,7 +82,6 @@ var addAdvertismentCard = function () {
   newOffer.querySelector('.popup__features').textContent = advertisments.features;
   newOffer.querySelector('.popup__description').textContent = advertisments.description;
   newOffer.querySelector('.popup__photos').src = advertisments.photos;
-  var authorAvatar = document.querySelector('.popup__avatar');
   authorAvatar.removeAttribute('src');
   authorAvatar.src = advertisments.avatar;
   mapBlock.appendChild(newOffer);

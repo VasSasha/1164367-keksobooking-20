@@ -78,7 +78,6 @@ var renderPost = function () {
   var authorAvatar = document.querySelector('.popup__avatar');
   authorAvatar.removeAttribute('src');
   authorAvatar.src = advertisments[i].avatar;
-  newTemplate.appendChild(newOffer);
-  mapBlock.appendChild(newTemplate);
+  mapBlock.appendChild(newOffer);
 };
 renderPost();

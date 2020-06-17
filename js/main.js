@@ -82,17 +82,19 @@ var renderAdvertisments = function () {
 };
 renderAdvertisments();
 var mapBlock = document.querySelector('.map');
-var advertisments = createArrayOfAdvertisments();
-var photos = advertisments[0].photos;
-if (photos.length > 1) {
+// создается карточка объявления
+var addAdvertismentCard = function () {
+  var photos = advertisments[0].photos;
+  if (photos.length > 1) {
   var blockPhotos = document.querySelector('.popup__photos');
    var fragment = document.createDocumentFragment();
    for (var i = 0; i < photos.length; i++) {
-   fragment.appendChild(photo[i]);
-   } blockPhotos.appendChild(fragment)
+    var image = document.createElement('img');
+    image.src = photos[i];
+    fragment.appendChild(image);
+   }
+   blockPhotos.appendChild(fragment);
 }
-// создается карточка объявления
-var addAdvertismentCard = function () {
   var advertisments = createArrayOfAdvertisments();
   var newTemplate = document.querySelector('#card').content;
   var newOffer = newTemplate.cloneNode(true);

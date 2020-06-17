@@ -69,7 +69,7 @@ var mapBlock = document.querySelector('.map');
 // var mapContainer = document.querySelector('.map__filters-container');
 // создается карточка объявления
 var addAdvertismentCard = function () {
-  advertisments[i].type = 'Квартира';
+  var advertisments = createArrayOfAdvertisments();
   var newTemplate = document.querySelector('#card').content;
   var newOffer = newTemplate.cloneNode(true);
   newOffer.querySelector('.popup__title').title = advertisments[i].title;
@@ -86,4 +86,4 @@ var addAdvertismentCard = function () {
   authorAvatar.src = advertisments[i].avatar;
   mapBlock.appendChild(newOffer);
 };
-renderPost();
+addAdvertismentCard();

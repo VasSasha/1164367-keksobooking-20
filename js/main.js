@@ -72,6 +72,7 @@ var addAdvertismentCard = function () {
   var advertisments = createArrayOfAdvertisments();
   var newTemplate = document.querySelector('#card').content;
   var newOffer = newTemplate.cloneNode(true);
+  var authorAvatar = document.querySelector('.popup__avatar');
   newOffer.querySelector('.popup__title').title = advertisments.title;
   newOffer.querySelector('.popup__text--address').textContent = advertisments.address;
   newOffer.querySelector('.popup__text--price').textContent = advertisments.price + ' ₽/ночь';

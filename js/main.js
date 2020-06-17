@@ -45,20 +45,20 @@ var createArrayOfAdvertisments = function () {
 };
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
-var translateAccomodationType = function () {
-  var advertisments = createArrayOfAdvertisments();
-  if (advertisments[0].type === 'flat') {
-    advertisments[0].type = 'Квартира';
+var translateAccomodationType = function (type) {
+  var newType;
+  if (type === 'flat') {
+    newType = 'Квартира';
   } else {
-    if (advertisments[0].type === 'house') {
-      advertisments[0].type = 'Дом';
+    if (type === 'house') {
+      newType = 'Дом';
     } else {
-      if (advertisments[0].type === 'palace') {
-        advertisments[0] = 'Дворец';
+      if (type === 'palace') {
+        newType = 'Дворец';
       } else {
-        advertisments[0].type = 'Бунгало';
+        newType = 'Бунгало';
       }
-    }
+    } return newType;
   }
 };
 // отображаются метки, заполненные данными массива
@@ -92,7 +92,7 @@ var addAdvertismentCard = function () {
   newOffer.querySelector('.popup__title').title = advertisments[0].title;
   newOffer.querySelector('.popup__text--address').textContent = advertisments[0].address;
   newOffer.querySelector('.popup__text--price').textContent = advertisments[0].price + ' ₽/ночь';
-  newOffer.querySelector('.popup__type').textContent = translateAccomodationType();
+  newOffer.querySelector('.popup__type').textContent = translateAccomodationType(advertisments[0].type);
   newOffer.querySelector('.popup__text--capacity').textContent = advertisments[0].rooms + ' ' + 'комнат(-ы) для' + ' ' + advertisments[0].guests + ' ' + 'гостей';
   newOffer.querySelector('.popup__text--time').textContent = 'Заезд после' + ' ' + advertisments[0].checkin + ', выезд до ' + advertisments[0].checkout;
   newOffer.querySelector('.popup__features').textContent = advertisments[0].features;

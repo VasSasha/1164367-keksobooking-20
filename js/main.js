@@ -19,7 +19,7 @@ var mapPins = document.querySelector('.map__pins');
 var createMassive = function () {
   for (var i = 1; i <= 8; i++) {
     var location = {
-      x: Math.floor(Math.random() * mapPins.offsetWidth()),
+      x: Math.random() * mapPins.offsetWidth,
       y: 130 + Math.random() * 500
     };
     var informationForPost = {

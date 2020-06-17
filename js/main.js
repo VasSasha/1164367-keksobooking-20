@@ -5,6 +5,7 @@ var getRandomElement = function (arr) {
 };
 var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var time = ['12:00', '13:00', '14:00'];
+var type = ['flat', 'house', 'palace', 'bungalo'];
 var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var getArray = function (arr) {
   var randomNumber = Math.floor(1 + Math.random() * ((arr.length - 1) - 1));
@@ -17,17 +18,17 @@ var advertisments = [];
 var createMassive = function () {
   for (var i = 1; i <= 8; i++) {
     var location = {
-      x: Math.random() * 200,
+      x: Math.floor(Math.random() * offsetWidth()),
       y: 130 + Math.random() * 500
     };
     var informationForPost = {
       avatar: 'img/avatars/user0' + i + '.png',
       title: 'заголовок предложения',
       address: location.x + ', ' + location.y,
-      price: 500 + 'USD',
-      type: 'flat',
-      rooms: 3,
-      guests: 3,
+      price: 500,
+      type: getArray(type),
+      rooms: Math.round(Math.random() * 10) + 1,
+      guests: Math.round(Math.random() * 10) + 1,
       checkin: getRandomElement(time),
       checkout: getRandomElement(time),
       features: getArray(features),
@@ -61,3 +62,4 @@ var renderAdvertisments = function () {
 };
 renderAdvertisments();
 
+ 

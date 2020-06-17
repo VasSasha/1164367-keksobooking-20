@@ -10,7 +10,7 @@ var getRandomElement = function (arr) {
 };
 // возвращается массив случайной длины из полученного массива
 var getRandomSubarray = function (arr) {
-  var randomNumber = Math.floor(1 + Math.random() * ((arr.length - 1) - 1));
+  var randomNumber = Math.round(1 + Math.random() * (arr.length - 1));
   var newArr = [];
   for (var i = 0; i < randomNumber; i++) {
     newArr.push(arr[i]);
@@ -49,18 +49,14 @@ var translateAccomodationType = function (type) {
   var newType;
   if (type === 'flat') {
     newType = 'Квартира';
-  } else {
-    if (type === 'house') {
+  } else if (type === 'house') {
       newType = 'Дом';
-    } else {
-      if (type === 'palace') {
+    } else  if (type === 'palace') {
         newType = 'Дворец';
       } else {
         newType = 'Бунгало';
-      }
-    } return newType;
-  }
-};
+      } return newType;
+    }
 // отображаются метки, заполненные данными массива
 var renderAdvertisments = function () {
   var advertisments = createArrayOfAdvertisments();
@@ -97,18 +93,21 @@ var addAdvertismentCard = function () {
   newOffer.querySelector('.popup__text--time').textContent = 'Заезд после' + ' ' + advertisments[0].checkin + ', выезд до ' + advertisments[0].checkout;
   newOffer.querySelector('.popup__features').textContent = advertisments[0].features;
   newOffer.querySelector('.popup__description').textContent = advertisments[0].description;
-  newOffer.querySelector('.popup__photos').src = advertisments[0].photos[0];
+  newOffer.querySelector('.popup__photos img').src = advertisments[0].photos[0];
     if (photos.length > 1) {
-  var blockPhotos = document.querySelector('.popup__photos');
+  var blockPhotos = newOffer.querySelector('.popup__photos');
    var fragment = document.createDocumentFragment();
    for (var i = 1; i < photos.length; i++) {
     var image = document.createElement('img');
     image.src = photos[i];
+    image.classList.add('popup__photo');
+    image.height = 40;
+    image.width = 45;
     fragment.appendChild(image);
    }
    blockPhotos.appendChild(fragment);
 }
-  authorAvatar.src = advertisments.avatar;
+  authorAvatar.src = advertisments[0].avatar;
   mapBlock.appendChild(newOffer);
 };
 addAdvertismentCard();

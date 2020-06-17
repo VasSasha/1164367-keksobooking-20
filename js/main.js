@@ -50,14 +50,14 @@ var renderAdvertisments = function () {
   var advertisments = createArrayOfAdvertisments();
   var fragment = document.createDocumentFragment();
   var template = document.querySelector('#pin').content;
-  var pinWidth = 40;
-  var pinHeight = 40;
+  var pinWidth = 50;
+  var pinHeight = 70;
   for (var i = 0; i < 8; i++) {
     var newAdd = template.cloneNode(true);
     var btn = newAdd.querySelector('.map__pin');
     var img = newAdd.querySelector('img');
     btn.style.top = advertisments[i].location.y - pinHeight + 'px';
-    btn.style.left = advertisments[i].location.x - pinWidth + 'px';
+    btn.style.left = advertisments[i].location.x - pinWidth / 2 + 'px';
     img.src = advertisments[i].avatar;
     img.alt = advertisments[i].title;
     fragment.appendChild(newAdd);

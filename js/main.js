@@ -48,7 +48,6 @@ map.classList.remove('map--faded');
 // отображаются метки, заполненные данными массива
 var renderAdvertisments = function () {
   var advertisments = createArrayOfAdvertisments();
-  createArrayOfAdvertisments();
   var fragment = document.createDocumentFragment();
   var template = document.querySelector('#pin').content;
   var pinWidth = 40;

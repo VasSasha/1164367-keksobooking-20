@@ -15,10 +15,11 @@ var getArray = function (arr) {
   } return newArr;
 };
 var advertisments = [];
+var mapPins = document.querySelector('.map__pins');
 var createMassive = function () {
   for (var i = 1; i <= 8; i++) {
     var location = {
-      x: Math.floor(Math.random() * offsetWidth()),
+      x: Math.floor(Math.random() * mapPins.offsetWidth()),
       y: 130 + Math.random() * 500
     };
     var informationForPost = {
@@ -49,7 +50,6 @@ var renderAdvertisments = function () {
   var pinHeight = 40;
   for (var i = 0; i < 8; i++) {
     var newAdd = template.cloneNode(true);
-    var mapPins = document.querySelector('.map__pins');
     var btn = newAdd.querySelector('.map__pin');
     var img = newAdd.querySelector('img');
     btn.style.top = advertisments[i].location.y - pinHeight + 'px';

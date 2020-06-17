@@ -84,18 +84,8 @@ renderAdvertisments();
 var mapBlock = document.querySelector('.map');
 // создается карточка объявления
 var addAdvertismentCard = function () {
-  var photos = advertisments[0].photos;
-  if (photos.length > 1) {
-  var blockPhotos = document.querySelector('.popup__photos');
-   var fragment = document.createDocumentFragment();
-   for (var i = 0; i < photos.length; i++) {
-    var image = document.createElement('img');
-    image.src = photos[i];
-    fragment.appendChild(image);
-   }
-   blockPhotos.appendChild(fragment);
-}
   var advertisments = createArrayOfAdvertisments();
+  var photos = advertisments[0].photos;
   var newTemplate = document.querySelector('#card').content;
   var newOffer = newTemplate.cloneNode(true);
   var authorAvatar = newOffer.querySelector('.popup__avatar');
@@ -108,6 +98,16 @@ var addAdvertismentCard = function () {
   newOffer.querySelector('.popup__features').textContent = advertisments[0].features;
   newOffer.querySelector('.popup__description').textContent = advertisments[0].description;
   newOffer.querySelector('.popup__photos').src = advertisments[0].photos;
+    if (photos.length > 1) {
+  var blockPhotos = document.querySelector('.popup__photos');
+   var fragment = document.createDocumentFragment();
+   for (var i = 0; i < photos.length; i++) {
+    var image = document.createElement('img');
+    image.src = photos[i];
+    fragment.appendChild(image);
+   }
+   blockPhotos.appendChild(fragment);
+}
   authorAvatar.src = advertisments.avatar;
   mapBlock.appendChild(newOffer);
 };

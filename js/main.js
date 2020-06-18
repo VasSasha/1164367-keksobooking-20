@@ -79,25 +79,25 @@ var renderAdvertisments = function () {
 renderAdvertisments();
 var mapBlock = document.querySelector('.map');
 // создается карточка объявления
-var addAdvertismentCard = function (advertisments[i]) {
+var addAdvertismentCard = function (offer) {
   var photos = advertisments[i].photos;
   var newTemplate = document.querySelector('#card').content;
   var newOffer = newTemplate.cloneNode(true);
   var authorAvatar = newOffer.querySelector('.popup__avatar');
-  newOffer.querySelector('.popup__title').title = advertisments[i].title;
-  newOffer.querySelector('.popup__text--address').textContent = advertisments[i].address;
-  newOffer.querySelector('.popup__text--price').textContent = advertisments[i].price + '₽/ночь';
-  newOffer.querySelector('.popup__type').textContent = translateAccomodationType(advertisments[i].type);
-  newOffer.querySelector('.popup__text--capacity').textContent = advertisments[i].rooms + ' ' + 'комнат(-ы) для' + ' ' + advertisments[i].guests + ' ' + 'гостей';
-  newOffer.querySelector('.popup__text--time').textContent = 'Заезд после' + ' ' + advertisments[i].checkin + ', выезд до ' + advertisments[i].checkout;
-  newOffer.querySelector('.popup__features').textContent = advertisments[i].features;
-  newOffer.querySelector('.popup__description').textContent = advertisments[i].description;
-  newOffer.querySelector('.popup__photos img').src = advertisments[i].photos[i];
+  newOffer.querySelector('.popup__title').title = offer.title;
+  newOffer.querySelector('.popup__text--address').textContent = offer.address;
+  newOffer.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
+  newOffer.querySelector('.popup__type').textContent = translateAccomodationType(offer.type);
+  newOffer.querySelector('.popup__text--capacity').textContent = offer.rooms + ' ' + 'комнат(-ы) для' + ' ' + offer.guests + ' ' + 'гостей';
+  newOffer.querySelector('.popup__text--time').textContent = 'Заезд после' + ' ' + offer.checkin + ', выезд до ' + offer.checkout;
+  newOffer.querySelector('.popup__features').textContent = offer.features;
+  newOffer.querySelector('.popup__description').textContent = offer.description;
+  newOffer.querySelector('.popup__photos img').src = offer.photos[i];
   if (photos.length > 1) {
     var blockPhotos = newOffer.querySelector('.popup__photos');
     var fragment = document.createDocumentFragment();
     for (var i = 1; i < photos.length; i++) {
-      var image = document.createElement('img'); 
+      var image = document.createElement('img');
       image.src = photos[i];
       image.classList.add('popup__photo');
       image.height = 40;
@@ -110,3 +110,4 @@ var addAdvertismentCard = function (advertisments[i]) {
   mapBlock.appendChild(newOffer);
 };
 addAdvertismentCard(advertisments[0]);
+

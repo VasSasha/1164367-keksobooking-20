@@ -77,7 +77,6 @@ var renderAdvertisments = function () {
   mapPins.appendChild(fragment);
 };
 renderAdvertisments();
-var mapBlock = document.querySelector('.map');
 // создается карточка объявления
 var addAdvertismentCard = function (offer) {
   var photos = offer.photos;
@@ -106,6 +105,7 @@ var addAdvertismentCard = function (offer) {
     }
     blockPhotos.appendChild(fragment);
   }
+  var mapBlock = document.querySelector('.map');
   authorAvatar.src = offer.avatar;
   var container = mapBlock.querySelector('.map__filters-container');
   mapBlock.insertBefore(newOffer, container);

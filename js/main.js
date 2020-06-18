@@ -80,7 +80,7 @@ renderAdvertisments();
 var mapBlock = document.querySelector('.map');
 // создается карточка объявления
 var addAdvertismentCard = function (offer) {
-  var photos = advertisments[i].photos;
+  var photos = offer.photos;
   var newTemplate = document.querySelector('#card').content;
   var newOffer = newTemplate.cloneNode(true);
   var authorAvatar = newOffer.querySelector('.popup__avatar');
@@ -92,7 +92,7 @@ var addAdvertismentCard = function (offer) {
   newOffer.querySelector('.popup__text--time').textContent = 'Заезд после' + ' ' + offer.checkin + ', выезд до ' + offer.checkout;
   newOffer.querySelector('.popup__features').textContent = offer.features;
   newOffer.querySelector('.popup__description').textContent = offer.description;
-  newOffer.querySelector('.popup__photos img').src = offer.photos[i];
+  newOffer.querySelector('.popup__photos img').src = offer.photos[0];
   if (photos.length > 1) {
     var blockPhotos = newOffer.querySelector('.popup__photos');
     var fragment = document.createDocumentFragment();
@@ -106,7 +106,7 @@ var addAdvertismentCard = function (offer) {
     }
     blockPhotos.appendChild(fragment);
   }
-  authorAvatar.src = advertisments[i].avatar;
+  authorAvatar.src = offer.avatar;
   mapBlock.appendChild(newOffer);
 };
 addAdvertismentCard(advertisments[0]);

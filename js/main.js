@@ -107,7 +107,9 @@ var addAdvertismentCard = function (offer) {
     blockPhotos.appendChild(fragment);
   }
   authorAvatar.src = offer.avatar;
-  mapBlock.appendChild(newOffer);
+  var container = mapBlock.querySelector('.map__filters-container');
+  mapBlock.insertBefore(newOffer, container);
 };
 addAdvertismentCard(advertisments[0]);
+
 

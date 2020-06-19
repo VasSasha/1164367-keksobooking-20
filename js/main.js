@@ -62,7 +62,6 @@ var translateAccomodationType = function (type) {
 var advertisments = createArrayOfAdvertisments();
 // отображаются метки, заполненные данными массива
 var renderAdvertisments = function () {
-  var advertisments = createArrayOfAdvertisments();
   var fragment = document.createDocumentFragment();
   var template = document.querySelector('#pin').content;
   var pinWidth = 50;

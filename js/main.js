@@ -30,6 +30,7 @@ var createArrayOfAdvertisments = function () {
       title: 'заголовок предложения',
       address: location.x + ', ' + location.y,
       price: 500,
+
       type: getRandomElement(TYPES),
       rooms: Math.round(Math.random() * 10) + 1,
       guests: Math.round(Math.random() * 10) + 1,
@@ -45,6 +46,7 @@ var createArrayOfAdvertisments = function () {
 };
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
+
 var translateAccomodationType = function (type) {
   var newType;
   if (type === 'flat') {
@@ -60,6 +62,7 @@ var translateAccomodationType = function (type) {
 var advertisments = createArrayOfAdvertisments();
 // отображаются метки, заполненные данными массива
 var renderAdvertisments = function () {
+  var advertisments = createArrayOfAdvertisments();
   var fragment = document.createDocumentFragment();
   var template = document.querySelector('#pin').content;
   var pinWidth = 50;
@@ -111,5 +114,4 @@ var addAdvertismentCard = function (offer) {
   mapBlock.insertBefore(newOffer, container);
 };
 addAdvertismentCard(advertisments[0]);
-
 

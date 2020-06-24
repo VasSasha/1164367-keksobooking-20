@@ -124,8 +124,8 @@ renderAdvertisments();
 };
 addAdvertismentCard(advertisments[0]);*/
 
-var mapFilters = document.querySelectorAll('.map-filters fieldset');
-var adForm = document.querySelectorAll('.ad-form fieldset');
+var mapFilters = document.querySelectorAll('.map__filters fieldset');
+var adForm = document.querySelector('.ad-form');
 var mapPin = document.querySelector('.map__pin--main');
 var guestsSelected = document.querySelector('#housing-guests option');
 var roomsSelected = document.querySelector('#housing-rooms option');
@@ -133,23 +133,29 @@ var getFormsBlocked = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].setAttribute('disabled', true);
   }
-}
+};
+var getFormsUnblocked = function (arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].removeAttribute('disabled');
+  }
+};
 // неактивное состояние страницы
 var renderNonActiveCondition = function () {
   getFormsBlocked(adForm);
   getFormsBlocked(mapFilters);
   map.classList.add('map--faded');
   adForm.classList.add('ad-form--disabled');
-  btn.style.top = advertisments[i].location.y - PIN_WIDTH / 2 + 'px';
-  btn.style.left = advertisments[i].location.x - PIN_WIDTH / 2 + 'px';
+  mapPin.style.top = location.y - PIN_WIDTH / 2 + 'px';
+  mapPin.style.left = location.x - PIN_WIDTH / 2 + 'px';
 };
 
 renderNonActiveCondition();
 // активное состояние страницы
 var renderActiveCondition = function () {
-  mapFilters[i].removeAttribute('disabled');
-  map.classList.remove('.map--faded');
-  adFilter.classList.remove('.ad-form--disabled');
+  getFormsUnblocked(adForm);
+  getFormsUnblocked(mapFilters);
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
 };
 
 var onPinClick = function (evt) {
@@ -170,10 +176,10 @@ mapPin.addEventListener('keydown', onEnterPress);
 // валидация форм
 var getValidForm = function () {
   if (roomsSelected.value < guestsSelected.value) {
-    guestsSelected.setCustomValidity('Количество гостей не должно превышать количество комнат.');
-    guestsSelected. reportValidity();
+    document.querySelector('#housing-guests').setCustomValidity('Количество гостей не должно превышать количество комнат.');
+    document.querySelector('#housing-guests').reportValidity();
   } else {
-    guestsSelected.setCustomValidity('');
+     document.querySelector('#housing-guests').setCustomValidity('');
   }
 };
 getValidForm();

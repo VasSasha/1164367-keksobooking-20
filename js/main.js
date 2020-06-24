@@ -148,8 +148,8 @@ var renderNonActiveCondition = function () {
   getFormsBlocked(mapFilters);
   map.classList.add('map--faded');
   adForm.classList.add('ad-form--disabled');
-  var mapPinX = parseInt(mapPinMain.style.left, 10);
-  var mapPinY = parseInt(mapPinMain.style.top, 10);
+  var mapPinX = parseInt(mapPinMain.style.left - PIN_WIDTH / 2, 10);
+  var mapPinY = parseInt(mapPinMain.style.top - PIN_WIDTH / 2, 10);
   document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
 };
 
@@ -168,14 +168,14 @@ var onPinClick = function (evt) {
   }
 };
 var renderAddress = function () {
-  var mapPinX = parseInt(mapPinMain.style.left, 10);
-  var mapPinY = parseInt(mapPinMain.style.top, 10);
+  var mapPinX = parseInt(mapPinMain.style.left - PIN_WIDTH / 2, 10);
+  var mapPinY = parseInt(mapPinMain.style.top - PIN_HEIGHT, 10);
   document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
 };
 mapPinMain.addEventListener('mousedown', renderAddress);
 mapPinMain.addEventListener('mousedown', onPinClick);
 var onEnterPress = function (evt) {
-  if ((mapPin === document.activeElement) && (evt.key === 'Enter')) {
+  if ((mapPinMain === document.activeElement) && (evt.key === 'Enter')) {
     renderActiveCondition();
   }
 };

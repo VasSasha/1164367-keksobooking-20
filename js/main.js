@@ -139,9 +139,11 @@ var getFormsUnblocked = function (arr) {
     arr[i].removeAttribute('disabled');
   }
 };
+var mapPinX = 570 - PIN_WIDTH / 2;
+var mapPinY  = 375 - PIN_WIDTH / 2 
 var getPinAddress = function () {
-  mapPin.style.top = location.y - PIN_WIDTH / 2 + 'px';
-  mapPin.style.left = location.x - PIN_WIDTH / 2 + 'px';
+mapPin.style.top = mapPinY + 'px';
+mapPin.style.left =  mapPinX  + 'px';
 }
 // неактивное состояние страницы
 var renderNonActiveCondition = function () {
@@ -166,10 +168,8 @@ var onPinClick = function (evt) {
     renderActiveCondition();
   }
 };
-mapPin.style.top = 375 + 'px';
-mapPin.style.left = 570 + 'px';
 var renderAddress = function () {
-  document.querySelector('#address').value = mapPin.style.left +', '+ mapPin.style.top;
+  document.querySelector('#address').value = mapPinX +', '+ mapPinY;
 }
 mapPin.addEventListener('mousedown', renderAddress);
 mapPin.addEventListener('mousedown', onPinClick);

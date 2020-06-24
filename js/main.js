@@ -126,7 +126,7 @@ addAdvertismentCard(advertisments[0]);*/
 
 var mapFilters = document.querySelectorAll('.map__filters fieldset');
 var adForm = document.querySelector('.ad-form');
-var mapPin = document.querySelector('.map__pin--main');
+var mapPinMain = document.querySelector('.map__pin--main');
 var guestsSelected = document.querySelector('#capacity');
 var roomsSelected = document.querySelector('#room_number');
 var getFormsBlocked = function (arr) {
@@ -139,12 +139,12 @@ var getFormsUnblocked = function (arr) {
     arr[i].removeAttribute('disabled');
   }
 };
-var mapPinX = 570 - PIN_WIDTH / 2;
-var mapPinY = 375 - PIN_WIDTH / 2;
+var mapPinX = 570;
+var mapPinY = 375;
 var getPinAddress = function () {
-  mapPin.style.top = mapPinY + 'px';
-  mapPin.style.left = mapPinX + 'px';
-};
+  mapPinMain.style.top = mapPinY - PIN_WIDTH / 2 + 'px';
+  mapPinMain.style.left = mapPinX - PIN_WIDTH / 2 + 'px';
+}
 // неактивное состояние страницы
 var renderNonActiveCondition = function () {
   getFormsBlocked(adForm);
@@ -171,15 +171,16 @@ var onPinClick = function (evt) {
 var renderAddress = function () {
   document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
 };
-mapPin.addEventListener('mousedown', renderAddress);
-mapPin.addEventListener('mousedown', onPinClick);
+
+mapPinMain.addEventListener('mousedown', renderAddress);
+mapPinMain.addEventListener('mousedown', onPinClick);
+mapPinMain.addEventListener('keydown', onEnterPress);
+
 var onEnterPress = function (evt) {
   if ((mapPin === document.activeElement) && (evt.key === 'Enter')) {
     renderActiveCondition();
   }
 };
-mapPin.addEventListener('keydown', onEnterPress);//
-mapPin.addEventListener('keydown', onEnterPress);
 
 // валидация форм
 var getValidForm = function () {

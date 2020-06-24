@@ -141,19 +141,16 @@ var getFormsUnblocked = function (arr) {
     arr[i].removeAttribute('disabled');
   }
 };
-var mapPinX = mapPinMain.style.left;
-var mapPinY = mapPinMain.style.top;
-var getPinAddress = function () {
-  var y = mapPinX + 'px';
-  var x = mapPinY  + 'px';
-};
+
 // неактивное состояние страницы
 var renderNonActiveCondition = function () {
   getFormsBlocked(adForm);
   getFormsBlocked(mapFilters);
   map.classList.add('map--faded');
   adForm.classList.add('ad-form--disabled');
-  getPinAddress();
+  var mapPinX = parseInt(mapPinMain.style.left, 10);
+  var mapPinY = parseInt(mapPinMain.style.top, 10);
+  document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
 };
 
 renderNonActiveCondition();
@@ -171,6 +168,8 @@ var onPinClick = function (evt) {
   }
 };
 var renderAddress = function () {
+  var mapPinX = parseInt(mapPinMain.style.left, 10);
+  var mapPinY = parseInt(mapPinMain.style.top, 10);
   document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
 };
 mapPinMain.addEventListener('mousedown', renderAddress);

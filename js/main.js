@@ -30,7 +30,7 @@ var createArrayOfAdvertisments = function () {
   for (var i = 1; i <= 8; i++) {
     var location = {
       x: Math.random() * mapPins.offsetWidth,
-      y: 130 + Math.random() * 500
+      y: 130 + Math.random() * 500,
     };
     var advertisment = {
       avatar: 'img/avatars/user0' + i + '.png',
@@ -127,8 +127,8 @@ addAdvertismentCard(advertisments[0]);*/
 var mapFilters = document.querySelectorAll('.map__filters fieldset');
 var adForm = document.querySelector('.ad-form');
 var mapPin = document.querySelector('.map__pin--main');
-var guestsSelected = document.querySelector('#housing-guests option');
-var roomsSelected = document.querySelector('#housing-rooms option');
+var guestsSelected = document.querySelector('#housing-guests');
+var roomsSelected = document.querySelector('#housing-rooms');
 var getFormsBlocked = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].setAttribute('disabled', true);
@@ -139,14 +139,17 @@ var getFormsUnblocked = function (arr) {
     arr[i].removeAttribute('disabled');
   }
 };
+var getPinAddress = function () {
+  mapPin.style.top = location.y - PIN_WIDTH / 2 + 'px';
+  mapPin.style.left = location.x - PIN_WIDTH / 2 + 'px';
+}
 // неактивное состояние страницы
 var renderNonActiveCondition = function () {
   getFormsBlocked(adForm);
   getFormsBlocked(mapFilters);
   map.classList.add('map--faded');
   adForm.classList.add('ad-form--disabled');
-  mapPin.style.top = location.y - PIN_WIDTH / 2 + 'px';
-  mapPin.style.left = location.x - PIN_WIDTH / 2 + 'px';
+  getPinAddress();
 };
 
 renderNonActiveCondition();
@@ -163,14 +166,19 @@ var onPinClick = function (evt) {
     renderActiveCondition();
   }
 };
-
+mapPin.style.top = 375 + 'px';
+mapPin.style.left = 570 + 'px';
+var renderAddress = function () {
+  document.querySelector('#address').value = mapPin.style.left +', '+ mapPin.style.top;
+}
+mapPin.addEventListener('mousedown', renderAddress);
 mapPin.addEventListener('mousedown', onPinClick);
 var onEnterPress = function (evt) {
   if ((mapPin === document.activeElement) && (evt.key === 'Enter')) {
     renderActiveCondition();
   }
 };
-
+mapPin.addEventListener('keydown', onEnterPress);//
 mapPin.addEventListener('keydown', onEnterPress);
 
 // валидация форм
@@ -182,6 +190,6 @@ var getValidForm = function () {
      document.querySelector('#housing-guests').setCustomValidity('');
   }
 };
-getValidForm();
-
+document.querySelector('#housing-guests').addEventListener('change', getValidForm);
+ 
 

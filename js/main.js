@@ -124,7 +124,7 @@ renderAdvertisments();
 };
 addAdvertismentCard(advertisments[0]);*/
 
-var mapFilters = document.querySelectorAll('form');
+var mapFilters = document.querySelectorAll('fieldset');
 var mapPin = document.querySelector('.map__pin--main');
 var guestsSelected = document.querySelector('#housing-guests option');
 var roomsSelected = document.querySelector('#housing-rooms option');

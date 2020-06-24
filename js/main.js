@@ -1,5 +1,7 @@
 'use strict';
 
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var TIMES = ['12:00', '13:00', '14:00'];
 var TYPES = ['flat', 'house', 'palace', 'bungalo'];
@@ -73,13 +75,11 @@ var btn = document.querySelector('.map__pin');
 var renderAdvertisments = function () {
   var fragment = document.createDocumentFragment();
   var template = document.querySelector('#pin').content;
-  var pinWidth = 50;
-  var pinHeight = 70;
   for (var i = 0; i < 8; i++) {
     var newAdd = template.cloneNode(true);
     var img = newAdd.querySelector('img');
-    btn.style.top = advertisments[i].location.y - pinHeight + 'px';
-    btn.style.left = advertisments[i].location.x - pinWidth / 2 + 'px';
+    btn.style.top = advertisments[i].location.y - PIN_HEIGHT + 'px';
+    btn.style.left = advertisments[i].location.x - PIN_WIDTH / 2 + 'px';
     img.src = advertisments[i].avatar;
     img.alt = advertisments[i].title;
     fragment.appendChild(newAdd);
@@ -133,8 +133,8 @@ var renderNonActiveCondition = function () {
   mapFilters.setAttribute('disabled', true);
   map.classList.add('.map--faded');
   adFilter.classList.add('.ad-form--disabled');
-  btn.style.top = advertisments[i].location.y - pinWidth / 2 + 'px';
-  btn.style.left = advertisments[i].location.x - pinWidth / 2 + 'px';
+  btn.style.top = advertisments[i].location.y - PIN_WIDTH / 2 + 'px';
+  btn.style.left = advertisments[i].location.x - PIN_WIDTH / 2 + 'px';
 };
 
 renderNonActiveCondition();
@@ -163,12 +163,13 @@ mapPin.addEventListener('keydown', onEnterPress);
 
 // валидация форм
 var getValidForm = function () {
-  if (roomsSelected.value !== guestsSelected.value) {
+  if (roomsSelected.value < guestsSelected.value) {
     guestsSelected.setCustomValidity('Количество гостей не должно превышать количество комнат.');
     guestsSelected. reportValidity();
   } else {
     guestsSelected.setCustomValidity('');
   }
 };
+getValidForm();
 
 

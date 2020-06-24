@@ -130,7 +130,7 @@ var mapPin = document.querySelector('.map__pin--main');
 var guestsSelected = document.querySelector('#housing-guests option');
 var roomsSelected = document.querySelector('#housing-rooms option');
 var getFormsBlocked = function (arr) {
-  for (i = 0; i < arr.length; i++) {
+  for (var i = 0; i < arr.length; i++) {
     arr[i].setAttribute('disabled', true);
   }
 }
@@ -138,8 +138,8 @@ var getFormsBlocked = function (arr) {
 var renderNonActiveCondition = function () {
   getFormsBlocked(adForm);
   getFormsBlocked(mapFilters);
-  map.classList.add('.map--faded');
-  adFilter.classList.add('.ad-form--disabled');
+  map.classList.add('map--faded');
+  adForm.classList.add('ad-form--disabled');
   btn.style.top = advertisments[i].location.y - PIN_WIDTH / 2 + 'px';
   btn.style.left = advertisments[i].location.x - PIN_WIDTH / 2 + 'px';
 };

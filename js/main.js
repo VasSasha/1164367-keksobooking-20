@@ -129,6 +129,7 @@ var adFilter = document.querySelector('.ad-form input');
 var mapPin = document.querySelector('.map__pin--main');
 var guestsSelected = document.querySelector('#housing-guests option');
 var roomsSelected = document.querySelector('#housing-rooms option');
+// неактивное состояние страницы
 var renderNonActiveCondition = function () {
   adFilter.disabled = 'disabled';
   mapFilters.children.disabled = 'disabled';
@@ -137,7 +138,7 @@ var renderNonActiveCondition = function () {
 };
 
 renderNonActiveCondition();
-
+// активное состояние страницы
 var renderActiveCondition = function () {
   adFilter.children.removeAttribute('disabled');
   mapFilters.children.removeAttribute('disabled');

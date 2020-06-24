@@ -124,13 +124,20 @@ renderAdvertisments();
 };
 addAdvertismentCard(advertisments[0]);*/
 
-var mapFilters = document.querySelectorAll('fieldset');
+var mapFilters = document.querySelectorAll('.map-filters fieldset');
+var adForm = document.querySelectorAll('.ad-form fieldset');
 var mapPin = document.querySelector('.map__pin--main');
 var guestsSelected = document.querySelector('#housing-guests option');
 var roomsSelected = document.querySelector('#housing-rooms option');
+var getFormsBlocked = function (arr) {
+  for (i = 0; i < arr.length; i++) {
+    arr[i].setAttribute('disabled', true);
+  }
+}
 // неактивное состояние страницы
 var renderNonActiveCondition = function () {
-  mapFilters.setAttribute('disabled', true);
+  getFormsBlocked(adForm);
+  getFormsBlocked(mapFilters);
   map.classList.add('.map--faded');
   adFilter.classList.add('.ad-form--disabled');
   btn.style.top = advertisments[i].location.y - PIN_WIDTH / 2 + 'px';
@@ -140,8 +147,7 @@ var renderNonActiveCondition = function () {
 renderNonActiveCondition();
 // активное состояние страницы
 var renderActiveCondition = function () {
-  adFilter.children.removeAttribute('disabled');
-  mapFilters.children.removeAttribute('disabled');
+  mapFilters[i].removeAttribute('disabled');
   map.classList.remove('.map--faded');
   adFilter.classList.remove('.ad-form--disabled');
 };

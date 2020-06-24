@@ -127,8 +127,8 @@ addAdvertismentCard(advertisments[0]);*/
 var mapFilters = document.querySelectorAll('.map__filters fieldset');
 var adForm = document.querySelector('.ad-form');
 var mapPin = document.querySelector('.map__pin--main');
-var guestsSelected = document.querySelector('#housing-guests');
-var roomsSelected = document.querySelector('#housing-rooms');
+var guestsSelected = document.querySelector('#capacity');
+var roomsSelected = document.querySelector('#room_number');
 var getFormsBlocked = function (arr) {
   for (var i = 0; i < arr.length; i++) {
     arr[i].setAttribute('disabled', true);
@@ -140,11 +140,11 @@ var getFormsUnblocked = function (arr) {
   }
 };
 var mapPinX = 570 - PIN_WIDTH / 2;
-var mapPinY  = 375 - PIN_WIDTH / 2 
+var mapPinY = 375 - PIN_WIDTH / 2;
 var getPinAddress = function () {
-mapPin.style.top = mapPinY + 'px';
-mapPin.style.left =  mapPinX  + 'px';
-}
+  mapPin.style.top = mapPinY + 'px';
+  mapPin.style.left = mapPinX + 'px';
+};
 // неактивное состояние страницы
 var renderNonActiveCondition = function () {
   getFormsBlocked(adForm);
@@ -169,8 +169,8 @@ var onPinClick = function (evt) {
   }
 };
 var renderAddress = function () {
-  document.querySelector('#address').value = mapPinX +', '+ mapPinY;
-}
+  document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
+};
 mapPin.addEventListener('mousedown', renderAddress);
 mapPin.addEventListener('mousedown', onPinClick);
 var onEnterPress = function (evt) {
@@ -184,12 +184,12 @@ mapPin.addEventListener('keydown', onEnterPress);
 // валидация форм
 var getValidForm = function () {
   if (roomsSelected.value < guestsSelected.value) {
-    document.querySelector('#housing-guests').setCustomValidity('Количество гостей не должно превышать количество комнат.');
-    document.querySelector('#housing-guests').reportValidity();
+    document.querySelector('#capacity').setCustomValidity('Количество гостей не должно превышать количество комнат.');
+    document.querySelector('#capacity').reportValidity();
   } else {
-     document.querySelector('#housing-guests').setCustomValidity('');
+    document.querySelector('#capacity').setCustomValidity('');
   }
 };
-document.querySelector('#housing-guests').addEventListener('change', getValidForm);
- 
+document.querySelector('#capacity').addEventListener('change', getValidForm);
+
 

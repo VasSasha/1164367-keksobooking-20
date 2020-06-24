@@ -148,8 +148,8 @@ var renderNonActiveCondition = function () {
   getFormsBlocked(mapFilters);
   map.classList.add('map--faded');
   adForm.classList.add('ad-form--disabled');
-  var mapPinX = parseInt(mapPinMain.style.left - PIN_WIDTH / 2, 10);
-  var mapPinY = parseInt(mapPinMain.style.top - PIN_WIDTH / 2, 10);
+  var mapPinX = parseInt(mapPinMain.style.left, 10) - PIN_WIDTH / 2;
+  var mapPinY = parseInt(mapPinMain.style.top, 10) - PIN_WIDTH / 2;
   document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
 };
 

@@ -202,3 +202,4 @@ var onFormUse = function () {
   }
 };
 document.querySelector('#capacity').addEventListener('change', onFormUse);
+document.querySelector('.map__card').style.display = 'none';

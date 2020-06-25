@@ -92,7 +92,7 @@ var renderAdvertisments = function () {
 renderAdvertisments();
 
 // создается карточка объявления
-/* var addAdvertismentCard = function (offer) {
+var addAdvertismentCard = function (offer) {
   var photos = offer.photos;
   var newTemplate = document.querySelector('#card').content;
   var newOffer = newTemplate.cloneNode(true);
@@ -124,7 +124,8 @@ renderAdvertisments();
   var container = mapBlock.querySelector('.map__filters-container');
   mapBlock.insertBefore(newOffer, container);
 };
-addAdvertismentCard(advertisments[0]);*/
+
+// addAdvertismentCard(advertisments[0]);
 
 var mapFilters = document.querySelectorAll('.map__filters fieldset');
 var adForm = document.querySelector('.ad-form');
@@ -187,13 +188,13 @@ var onEnterPress = function (evt) {
 mapPinMain.addEventListener('keydown', onEnterPress);
 // валидация форм
 var onFormUse = function () {
-  if ((parseInt(roomsSelected.value) !== 100) && (parseInt(guestsSelected.value) === 0)) {
+  if ((parseInt(roomsSelected.value, 10) !== 100) && (parseInt(guestsSelected.value, 10) === 0)) {
     document.querySelector('#capacity').setCustomValidity('Единственный вариант не для гостей - "100 комнат"');
     document.querySelector('#capacity').reportValidity();
-  } else if ((parseInt(roomsSelected.value) === 100) && (parseInt(guestsSelected.value) !== 0)) {
+  } else if ((parseInt(roomsSelected.value, 10) === 100) && (parseInt(guestsSelected.value, 10) !== 0)) {
     document.querySelector('#capacity').setCustomValidity('Данное количество комнат не предназначено для гостей');
     document.querySelector('#capacity').reportValidity();
-  } else if (parseInt(roomsSelected.value) < parseInt(guestsSelected.value)) {
+  } else if (parseInt(roomsSelected.value, 10) < parseInt(guestsSelected.value, 10)) {
     document.querySelector('#capacity').setCustomValidity('Количество гостей не должно превышать количество комнат.');
     document.querySelector('#capacity').reportValidity();
   } else {

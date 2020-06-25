@@ -545,7 +545,6 @@ fieldset {
 
   cursor: pointer;
 }
-
 .ad-form-header__drop-zone:hover {
   color: #ff5635;
 }
@@ -993,6 +992,7 @@ fieldset {
 
   border-radius: 5px;
   background-color: #ffffff;
+  display: none;
 }
 
 .popup__avatar {

@@ -125,7 +125,7 @@ var addAdvertismentCard = function (offer) {
   mapBlock.insertBefore(newOffer, container);
 };
 
-// addAdvertismentCard(advertisments[0]);
+addAdvertismentCard(advertisments[0]);
 
 var mapFilters = document.querySelectorAll('.map__filters fieldset');
 var adForm = document.querySelector('.ad-form');

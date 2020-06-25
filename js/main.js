@@ -167,28 +167,37 @@ var onPinClick = function (evt) {
     renderActiveCondition();
   }
 };
-var renderAddress = function () {
+
+// отображается адрес метки в окне ввода
+var onPlaceChange = function () {
   var mapPinX = parseInt(mapPinMain.style.left, 10) + 33;
   var mapPinY = parseInt(mapPinMain.style.top, 10) + 65 + 17;
   document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
 };
-mapPinMain.addEventListener('mousedown', renderAddress);
+
+mapPinMain.addEventListener('mousedown', onPlaceChange);
 mapPinMain.addEventListener('mousedown', onPinClick);
+
 var onEnterPress = function (evt) {
   if ((mapPinMain === document.activeElement) && (evt.key === 'Enter')) {
     renderActiveCondition();
   }
 };
-mapPinMain.addEventListener('keydown', onEnterPress);//
-mapPinMain.addEventListener('keydown', onEnterPress);
 
+mapPinMain.addEventListener('keydown', onEnterPress);
 // валидация форм
-var getValidForm = function () {
-  if (roomsSelected.value < guestsSelected.value) {
+var onFormUse = function () {
+  if ((parseInt(roomsSelected.value) !== 100) && (parseInt(guestsSelected.value) === 0)) {
+    document.querySelector('#capacity').setCustomValidity('Единственный вариант не для гостей - "100 комнат"');
+    document.querySelector('#capacity').reportValidity();
+  } else if ((parseInt(roomsSelected.value) === 100) && (parseInt(guestsSelected.value) !== 0)) {
+    document.querySelector('#capacity').setCustomValidity('Данное количество комнат не предназначено для гостей');
+    document.querySelector('#capacity').reportValidity();
+  } else if (parseInt(roomsSelected.value) < parseInt(guestsSelected.value)) {
     document.querySelector('#capacity').setCustomValidity('Количество гостей не должно превышать количество комнат.');
     document.querySelector('#capacity').reportValidity();
   } else {
     document.querySelector('#capacity').setCustomValidity('');
   }
 };
-document.querySelector('#capacity').addEventListener('change', getValidForm);
+document.querySelector('#capacity').addEventListener('change', onFormUse);

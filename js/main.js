@@ -270,13 +270,13 @@ checkOut.addEventListener('change', checkOutListener);
 var imgInput = document.querySelector('#avatar');
 imgInput.setAttribute('accept', 'image/*');
 
-// отображение объявления по клику на метку
+//
 var pin = document.querySelector('.map__pin');
 var addCard = document.querySelector('.popup');
 
 // возвращает рандомный элемент массива с объявлениями
 var getRandomArrayIndex = function (arr) {
-  var card = Math.floor( Math.random * arr.length);
+  var card = Math.floor(Math.random * arr.length);
   return arr[card];
 };
 
@@ -290,7 +290,7 @@ var onAnyPinClick = function () {
   }
 };
 
-// доткрытие окна при нажатии Enter
+// открытие окна при нажатии Enter
 var onPinEnterPress = function (evt) {
   if ((evt.key === 'Enter') && (pin === document.activeElement)) {
     getRandomArrayIndex(advertisments);

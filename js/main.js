@@ -231,8 +231,6 @@ if (priceInput.value > maxValue) {
 var typeOfAccomodation = document.querySelector('#type');
 var onTypeInputClick = function () {
   if (typeOfAccomodation.value === 'bungalo') {
-    priceInput.setCustomValidity('Минимальная цена за ночь:0');
-    priceInput.reportValidity();
     priceInput.placeholder = '0';
   } else if ((typeOfAccomodation.value === 'flat') && (priceInput.value < 1000)) {
     priceInput.setCustomValidity('Минимальная цена за ночь:1000');
@@ -267,11 +265,12 @@ checkIn.addEventListener('change', checkInListener);
 checkOut.addEventListener('change', checkOutListener);
 
 // валидация формы для фото
-var imgInput = document.querySelector('#avatar');
-imgInput.setAttribute('accept', 'image/*');
+var imgOfHouse = document.querySelector('#images');
+var imgOfHost = document.querySelector('#avatar');
+imgOfHost.setAttribute('accept', 'image/*');
+imgOfHouse.setAttribute('accept', 'image/*');
 
 //
-var pin = document.querySelector('.map__pin');
 var addCard = document.querySelector('.popup');
 
 // возвращает рандомный элемент массива с объявлениями
@@ -295,8 +294,7 @@ var onPinEnterPress = function (evt) {
   if ((evt.key === 'Enter') && (pin === document.activeElement)) {
     getRandomArrayIndex(advertisments);
     addCard.classList.remove('hidden');
-    addCard.display = 'block';
   }
 };
-pin.addEventListener('click', onAnyPinClick);
-pin.addEventListener('keydown', onPinEnterPress);
+btn.addEventListener('click', onAnyPinClick);
+btn.addEventListener('keydown', onPinEnterPress);

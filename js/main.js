@@ -1,3 +1,5 @@
+
+
 'use strict';
 
 var PIN_WIDTH = 50;
@@ -90,7 +92,7 @@ var renderAdvertisments = function () {
 renderAdvertisments();
 
 // создается карточка объявления
-/* var addAdvertismentCard = function (offer) {
+var addAdvertismentCard = function (offer) {
   var photos = offer.photos;
   var newTemplate = document.querySelector('#card').content;
   var newOffer = newTemplate.cloneNode(true);
@@ -122,7 +124,6 @@ renderAdvertisments();
   var container = mapBlock.querySelector('.map__filters-container');
   mapBlock.insertBefore(newOffer, container);
 };
-addAdvertismentCard(advertisments[0]);*/
 
 var mapFilters = document.querySelectorAll('.map__filters fieldset');
 var adForm = document.querySelector('.ad-form');
@@ -139,19 +140,16 @@ var getFormsUnblocked = function (arr) {
     arr[i].removeAttribute('disabled');
   }
 };
-var mapPinX = 570;
-var mapPinY = 375;
-var getPinAddress = function () {
-  mapPinMain.style.top = mapPinY - PIN_WIDTH / 2 + 'px';
-  mapPinMain.style.left = mapPinX - PIN_WIDTH / 2 + 'px';
-}
+
 // неактивное состояние страницы
 var renderNonActiveCondition = function () {
   getFormsBlocked(adForm);
   getFormsBlocked(mapFilters);
   map.classList.add('map--faded');
   adForm.classList.add('ad-form--disabled');
-  getPinAddress();
+  var mapPinX = parseInt(mapPinMain.style.left, 10) + 33;
+  var mapPinY = parseInt(mapPinMain.style.top, 10) + 33;
+  document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
 };
 
 renderNonActiveCondition();
@@ -161,6 +159,9 @@ var renderActiveCondition = function () {
   getFormsUnblocked(mapFilters);
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
+  var addressInput = document.querySelector('#address');
+  addressInput.setAttribute('disabled', true);
+
 };
 
 var onPinClick = function (evt) {
@@ -168,29 +169,134 @@ var onPinClick = function (evt) {
     renderActiveCondition();
   }
 };
-var renderAddress = function () {
+
+// отображается адрес метки в окне ввода
+var onPlaceChange = function () {
+  var mapPinX = parseInt(mapPinMain.style.left, 10) + 33;
+  var mapPinY = parseInt(mapPinMain.style.top, 10) + 65 + 17;
   document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
 };
 
-mapPinMain.addEventListener('mousedown', renderAddress);
+mapPinMain.addEventListener('mousedown', onPlaceChange);
 mapPinMain.addEventListener('mousedown', onPinClick);
-mapPinMain.addEventListener('keydown', onEnterPress);
 
 var onEnterPress = function (evt) {
-  if ((mapPin === document.activeElement) && (evt.key === 'Enter')) {
+  if ((mapPinMain === document.activeElement) && (evt.key === 'Enter')) {
     renderActiveCondition();
   }
 };
 
+mapPinMain.addEventListener('keydown', onEnterPress);
 // валидация форм
-var getValidForm = function () {
-  if (roomsSelected.value < guestsSelected.value) {
+// поле количества комнат и гостей
+var onFormUse = function () {
+  if ((parseInt(roomsSelected.value, 10) !== 100) && (parseInt(guestsSelected.value, 10) === 0)) {
+    document.querySelector('#capacity').setCustomValidity('Единственный вариант не для гостей - "100 комнат"');
+    document.querySelector('#capacity').reportValidity();
+  } else if ((parseInt(roomsSelected.value, 10) === 100) && (parseInt(guestsSelected.value, 10) !== 0)) {
+    document.querySelector('#capacity').setCustomValidity('Данное количество комнат не предназначено для гостей');
+    document.querySelector('#capacity').reportValidity();
+  } else if (parseInt(roomsSelected.value, 10) < parseInt(guestsSelected.value, 10)) {
     document.querySelector('#capacity').setCustomValidity('Количество гостей не должно превышать количество комнат.');
     document.querySelector('#capacity').reportValidity();
   } else {
     document.querySelector('#capacity').setCustomValidity('');
   }
 };
-document.querySelector('#capacity').addEventListener('change', getValidForm);
+document.querySelector('#capacity').addEventListener('change', onFormUse);
+// поле заголовка объявления
+document.querySelector('#title').setAttribute('required', true);
+var onTitleClick = function () {
+  if (document.querySelector('#title').validity.tooShort) {
+    document.querySelector('#title').setCustomValidity('Минимальное количество символов: 30');
+    document.querySelector('#title').reportValidity();
+  } else if (document.querySelector('#title').validity.tooLong) {
+    document.querySelector('#title').setCustomValidity('Максимальное количество символов: 100');
+    document.querySelector('#title').reportValidity();
+  } else {
+    document.querySelector('#title').setCustomValidity('');
+  }
+};
+document.querySelector('#title').addEventListener('input', onTitleClick);
+// поле цены за ночь
+var priceInput = document.querySelector('#price');
+priceInput.setAttribute('required', true);
+var maxValue = 1000000;
+if (priceInput.value > maxValue) {
+  priceInput.setCustomValidity('Максимальная доступная цена - 1000000');
+  priceInput.reportValidity();
+}
 
+// влияние типа жилья на цену
+var typeOfAccomodation = document.querySelector('#type');
+var onTypeInputClick = function () {
+  if (typeOfAccomodation.value === 'bungalo') {
+    priceInput.setCustomValidity('Минимальная цена за ночь:0');
+    priceInput.reportValidity();
+    priceInput.placeholder = '0';
+  } else if ((typeOfAccomodation.value === 'flat') && (priceInput.value < 1000)) {
+    priceInput.setCustomValidity('Минимальная цена за ночь:1000');
+    priceInput.reportValidity();
+    priceInput.placeholder = '1000';
+  } else if ((typeOfAccomodation.value === 'house') && (priceInput.value < 5000)) {
+    priceInput.setCustomValidity('Минимальная цена за ночь:5000');
+    priceInput.reportValidity();
+    priceInput.placeholder = '5000';
+  } else if (priceInput.value < 10000) {
+    priceInput.setCustomValidity('Минимальная цена за ночь:10000');
+    priceInput.reportValidity();
+    priceInput.placeholder = '10000';
+  } else {
+    priceInput.setCustomValidity('');
+  }
+};
 
+priceInput.addEventListener('input', onTypeInputClick);
+typeOfAccomodation.addEventListener('change', onTypeInputClick);
+
+// поля заезда и выезда
+var checkIn = document.querySelector('#timein');
+var checkOut = document.querySelector('#timeout');
+var checkInListener = function () {
+  checkOut.value = checkIn.value;
+};
+var checkOutListener = function () {
+  checkIn.value = checkOut.value;
+};
+checkIn.addEventListener('change', checkInListener);
+checkOut.addEventListener('change', checkOutListener);
+
+// валидация формы для фото
+var imgInput = document.querySelector('#avatar');
+imgInput.setAttribute('accept', 'image/*');
+
+// отображение объявления по клику на метку
+var pin = document.querySelector('.map__pin');
+var addCard = document.querySelector('.popup');
+
+// возвращает рандомный элемент массива с объявлениями
+var getRandomArrayIndex = function (arr) {
+  var card = Math.floor( Math.random * arr.length);
+  return arr[card];
+};
+
+// открытие окна при клике по пину
+var onAnyPinClick = function () {
+  if (!mapPinMain) {
+    var element = getRandomArrayIndex(advertisments);
+    addAdvertismentCard(element);
+    addCard.classList.remove('hidden');
+    addCard.display = 'block';
+  }
+};
+
+// доткрытие окна при нажатии Enter
+var onPinEnterPress = function (evt) {
+  if ((evt.key === 'Enter') && (pin === document.activeElement)) {
+    getRandomArrayIndex(advertisments);
+    addCard.classList.remove('hidden');
+    addCard.display = 'block';
+  }
+};
+pin.addEventListener('click', onAnyPinClick);
+pin.addEventListener('keydown', onPinEnterPress);

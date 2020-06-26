@@ -126,24 +126,27 @@ var addAdvertismentCard = function (offer) {
 };
 
 var mapFilters = document.querySelectorAll('.map__filters fieldset');
+var adForms = document.querySelectorAll('.ad-form fieldset');
 var adForm = document.querySelector('.ad-form');
 var mapPinMain = document.querySelector('.map__pin--main');
 var guestsSelected = document.querySelector('#capacity');
 var roomsSelected = document.querySelector('#room_number');
+
 var getFormsBlocked = function (arr) {
-  for (var i = 0; i < arr.length; i++) {
-    arr[i].setAttribute('disabled', true);
-  }
+for (var i = 0; i < arr.length; i++) {
+arr[i].setAttribute('disabled', true);
+}
 };
+
 var getFormsUnblocked = function (arr) {
-  for (var i = 0; i < arr.length; i++) {
-    arr[i].removeAttribute('disabled');
-  }
+for (var i = 0; i < arr.length; i++) {
+arr[i].removeAttribute('disabled');
+}
 };
 
 // неактивное состояние страницы
 var renderNonActiveCondition = function () {
-  getFormsBlocked(adForm);
+  getFormsBlocked(adForms);
   getFormsBlocked(mapFilters);
   map.classList.add('map--faded');
   adForm.classList.add('ad-form--disabled');
@@ -152,10 +155,11 @@ var renderNonActiveCondition = function () {
   document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
 };
 
+
 renderNonActiveCondition();
 // активное состояние страницы
 var renderActiveCondition = function () {
-  getFormsUnblocked(adForm);
+  getFormsUnblocked(adForms);
   getFormsUnblocked(mapFilters);
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
@@ -272,7 +276,7 @@ imgOfHouse.setAttribute('accept', 'image/*');
 
 //
 var addCard = document.querySelector('.popup');
-
+var pin = document.querySelectorAll('#pin .map__pin');
 // возвращает рандомный элемент массива с объявлениями
 var getRandomArrayIndex = function (arr) {
   var card = Math.floor(Math.random * arr.length);
@@ -281,20 +285,22 @@ var getRandomArrayIndex = function (arr) {
 
 // открытие окна при клике по пину
 var onAnyPinClick = function () {
-  if (!mapPinMain) {
-    var element = getRandomArrayIndex(advertisments);
-    addAdvertismentCard(element);
-    addCard.classList.remove('hidden');
-    addCard.display = 'block';
-  }
+  var element = getRandomArrayIndex(advertisments);
+  addAdvertismentCard(element);
+  addCard.classList.remove('hidden');
+  addCard.display = 'block';
 };
 
 // открытие окна при нажатии Enter
 var onPinEnterPress = function (evt) {
-  if ((evt.key === 'Enter') && (pin === document.activeElement)) {
+  if ((evt.key === 'Enter') && (btn === document.activeElement)) {
     getRandomArrayIndex(advertisments);
     addCard.classList.remove('hidden');
   }
 };
-btn.addEventListener('click', onAnyPinClick);
-btn.addEventListener('keydown', onPinEnterPress);
+var postListeners = function () {
+  for (var i = 0; i < advertisments.length; i++) {
+    pin.addEventListener('click', onAnyPinClick);
+    pin.addEventListener('keydown', onPinEnterPress);
+  }
+};

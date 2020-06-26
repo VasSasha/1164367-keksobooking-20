@@ -276,31 +276,21 @@ imgOfHouse.setAttribute('accept', 'image/*');
 
 //
 var addCard = document.querySelector('.popup');
-var pin = document.querySelectorAll('#pin .map__pin');
+var pin = document.querySelectorAll('.map__pin');
 // возвращает рандомный элемент массива с объявлениями
 var getRandomArrayIndex = function (arr) {
   var card = Math.floor(Math.random * arr.length);
   return arr[card];
 };
-
+var element = getRandomArrayIndex(advertisments);
 // открытие окна при клике по пину
 var onAnyPinClick = function () {
-  var element = getRandomArrayIndex(advertisments);
   addAdvertismentCard(element);
   addCard.classList.remove('hidden');
-  addCard.display = 'block';
 };
 
-// открытие окна при нажатии Enter
-var onPinEnterPress = function (evt) {
-  if ((evt.key === 'Enter') && (btn === document.activeElement)) {
-    getRandomArrayIndex(advertisments);
-    addCard.classList.remove('hidden');
-  }
-};
 var postListeners = function () {
   for (var i = 0; i < advertisments.length; i++) {
     pin.addEventListener('click', onAnyPinClick);
-    pin.addEventListener('keydown', onPinEnterPress);
   }
 };

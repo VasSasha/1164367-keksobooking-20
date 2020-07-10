@@ -273,12 +273,12 @@ var imgOfHost = document.querySelector('#avatar');
 imgOfHost.setAttribute('accept', 'image/*');
 imgOfHouse.setAttribute('accept', 'image/*');
 
-
+var cards = Array.from(document.querySelectorAll('.map__card'));
 // открытие окна при клике по пину
 var onAnyPinClick = function () {
   for (var i = 0; i < advertisments.length; i++) {
     addAdvertismentCard(advertisments[i]);
-    advertisments[i].classList.remove('hidden');
+    cards[i].classList.remove('hidden');
   } 
 };
 var pin = Array.from(document.querySelectorAll('.map__pin'));

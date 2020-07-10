@@ -32,14 +32,13 @@ var createArrayOfAdvertisments = function () {
   for (var i = 1; i <= 8; i++) {
     var location = {
       x: Math.random() * mapPins.offsetWidth,
-      y: 130 + Math.random() * 500,
+      y: 130 + Math.random() * 500
     };
     var advertisment = {
       avatar: 'img/avatars/user0' + i + '.png',
       title: 'заголовок предложения',
       address: location.x + ', ' + location.y,
       price: 500,
-
       type: getRandomElement(TYPES),
       rooms: Math.round(Math.random() * 10) + 1,
       guests: Math.round(Math.random() * 10) + 1,
@@ -71,7 +70,6 @@ var translateAccomodationType = function (type) {
 };
 
 var advertisments = createArrayOfAdvertisments();
-var btn = document.querySelector('.map__pin');
 
 // отображаются метки, заполненные данными массива
 var renderAdvertisments = function () {
@@ -79,18 +77,19 @@ var renderAdvertisments = function () {
   var template = document.querySelector('#pin').content;
   for (var i = 0; i < 8; i++) {
     var newAdd = template.cloneNode(true);
+    var btn = newAdd.querySelector('.map__pin');
     var img = newAdd.querySelector('img');
-    btn.style.top = advertisments[i].location.y - PIN_HEIGHT + 'px';
-    btn.style.left = advertisments[i].location.x - PIN_WIDTH / 2 + 'px';
+    btn.style.top = advertisments[i].location.y + PIN_HEIGHT + 'px';
+    btn.style.left = advertisments[i].location.x + PIN_WIDTH / 2 + 'px';
     img.src = advertisments[i].avatar;
     img.alt = advertisments[i].title;
     fragment.appendChild(newAdd);
   }
   mapPins.appendChild(fragment);
+  return newAdd;
 };
-
+  var addCards = Array.from(document.querySelectorAll('.popup'));
 renderAdvertisments();
-
 // создается карточка объявления
 var addAdvertismentCard = function (offer) {
   var photos = offer.photos;
@@ -274,23 +273,35 @@ var imgOfHost = document.querySelector('#avatar');
 imgOfHost.setAttribute('accept', 'image/*');
 imgOfHouse.setAttribute('accept', 'image/*');
 
-//
-var addCard = document.querySelector('.popup');
-var pin = document.querySelectorAll('.map__pin');
-// возвращает рандомный элемент массива с объявлениями
-var getRandomArrayIndex = function (arr) {
-  var card = Math.floor(Math.random * arr.length);
-  return arr[card];
-};
-var element = getRandomArrayIndex(advertisments);
+
 // открытие окна при клике по пину
 var onAnyPinClick = function () {
-  addAdvertismentCard(element);
-  addCard.classList.remove('hidden');
+  for (var i = 0; i < advertisments.length; i++) {
+    addAdvertismentCard(advertisments[i]);
+    advertisments[i].classList.remove('hidden');
+  } 
+};
+var pin = Array.from(document.querySelectorAll('.map__pin'));
+var postListeners = function () {
+  //if (!mapPinMain) {
+    for (var i = 0; i < 8; i++) {
+      pin[i].addEventListener('click', function () {
+        onAnyPinClick();
+    });
+    }
+  //}
 };
 
-var postListeners = function () {
-  for (var i = 0; i < advertisments.length; i++) {
-    pin.addEventListener('click', onAnyPinClick);
+postListeners();
+
+var onPinClose = function () {
+  for (var i = 0; i < 8; i++) {
+  advertisments[i].classList.add('hidden');
+  pin.removeEventListener('click', onAnyPinClick);
+}
+}
+/*var managePopUps = function () {
+  if () {
+
   }
-};
+}*/

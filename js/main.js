@@ -85,10 +85,8 @@ var renderAdvertisments = function () {
     img.alt = advertisments[i].title;
     fragment.appendChild(newAdd);
   }
-  mapPins.appendChild(fragment);
-  return newAdd;
+  mapPins.appendChild(fragment); 
 };
-  var addCards = Array.from(document.querySelectorAll('.popup'));
 renderAdvertisments();
 // создается карточка объявления
 var addAdvertismentCard = function (offer) {
@@ -266,35 +264,29 @@ var checkOutListener = function () {
 };
 checkIn.addEventListener('change', checkInListener);
 checkOut.addEventListener('change', checkOutListener);
-
+addAdvertismentCard(advertisments[0]);
 // валидация формы для фото
 var imgOfHouse = document.querySelector('#images');
 var imgOfHost = document.querySelector('#avatar');
 imgOfHost.setAttribute('accept', 'image/*');
 imgOfHouse.setAttribute('accept', 'image/*');
-
+var pins = Array.from(document.querySelectorAll('.map__pin'));
 var cards = Array.from(document.querySelectorAll('.map__card'));
-// открытие окна при клике по пину
-var onAnyPinClick = function () {
-  for (var i = 0; i < advertisments.length; i++) {
-    addAdvertismentCard(advertisments[i]);
-    cards[i].classList.remove('hidden');
-  } 
-};
-var pin = Array.from(document.querySelectorAll('.map__pin'));
-var postListeners = function () {
-  //if (!mapPinMain) {
-    for (var i = 0; i < 8; i++) {
-      pin[i].addEventListener('click', function () {
-        onAnyPinClick();
-    });
-    }
-  //}
-};
+var setPinAttribute = function () {
+  for (var i = 1; i < pins.length; i++) {
+    pins[i].setAttribute('data-index-number', i - 1);
+  }
+}
+setPinAttribute();
 
-postListeners();
+var onPinClick = function (evt) {
+  var pin = evt.target.closest('.map__pin');
+  var j = pin.dataset.indexNumber;
+  addAdvertismentCard(advertisments[j]);
+} 
+mapPins.addEventListener('click', onPinClick);
 
-var onPinClose = function () {
+/*var onPinClose = function () {
   for (var i = 0; i < 8; i++) {
   advertisments[i].classList.add('hidden');
   pin.removeEventListener('click', onAnyPinClick);

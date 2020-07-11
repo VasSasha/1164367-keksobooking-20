@@ -165,7 +165,7 @@ var renderActiveCondition = function () {
 
 };
 
-var onPinClick = function (evt) {
+var onMainPinClick = function (evt) {
   if (evt.button === 0) {
     renderActiveCondition();
   }
@@ -179,7 +179,7 @@ var onPlaceChange = function () {
 };
 
 mapPinMain.addEventListener('mousedown', onPlaceChange);
-mapPinMain.addEventListener('mousedown', onPinClick);
+mapPinMain.addEventListener('mousedown', onMainPinClick);
 
 var onEnterPress = function (evt) {
   if ((mapPinMain === document.activeElement) && (evt.key === 'Enter')) {
@@ -227,6 +227,7 @@ if (priceInput.value > maxValue) {
   priceInput.setCustomValidity('Максимальная доступная цена - 1000000');
   priceInput.reportValidity();
 }
+var cards = Array.from(document.querySelectorAll('.map__card'));
 
 // влияние типа жилья на цену
 var typeOfAccomodation = document.querySelector('#type');
@@ -264,14 +265,13 @@ var checkOutListener = function () {
 };
 checkIn.addEventListener('change', checkInListener);
 checkOut.addEventListener('change', checkOutListener);
-addAdvertismentCard(advertisments[0]);
+
 // валидация формы для фото
 var imgOfHouse = document.querySelector('#images');
 var imgOfHost = document.querySelector('#avatar');
 imgOfHost.setAttribute('accept', 'image/*');
 imgOfHouse.setAttribute('accept', 'image/*');
 var pins = Array.from(document.querySelectorAll('.map__pin'));
-var cards = Array.from(document.querySelectorAll('.map__card'));
 var setPinAttribute = function () {
   for (var i = 1; i < pins.length; i++) {
     pins[i].setAttribute('data-index-number', i - 1);
@@ -283,7 +283,8 @@ var onPinClick = function (evt) {
   var pin = evt.target.closest('.map__pin');
   var j = pin.dataset.indexNumber;
   addAdvertismentCard(advertisments[j]);
-} 
+  cards[j].classList.remove('hidden');
+}
 mapPins.addEventListener('click', onPinClick);
 
 /*var onPinClose = function () {

@@ -290,6 +290,9 @@ var onClosePopUpEsc = function (evt) {
 
 var onPinClick = function (evt) {
   var pin = evt.target.closest('.map__pin');
+  if ((!pin) || (pin.classList.contains('map__pin--main'))) {
+    return;
+  }
   var j = pin.dataset.indexNumber;
   addAdvertismentCard(advertisments[j]);
   var card = document.querySelector('.map__card');

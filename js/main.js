@@ -85,7 +85,7 @@ var renderAdvertisments = function () {
     img.alt = advertisments[i].title;
     fragment.appendChild(newAdd);
   }
-  mapPins.appendChild(fragment); 
+  mapPins.appendChild(fragment);
 };
 renderAdvertisments();
 // создается карточка объявления
@@ -130,15 +130,15 @@ var guestsSelected = document.querySelector('#capacity');
 var roomsSelected = document.querySelector('#room_number');
 
 var getFormsBlocked = function (arr) {
-for (var i = 0; i < arr.length; i++) {
-arr[i].setAttribute('disabled', true);
-}
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].setAttribute('disabled', true);
+  }
 };
 
 var getFormsUnblocked = function (arr) {
-for (var i = 0; i < arr.length; i++) {
-arr[i].removeAttribute('disabled');
-}
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].removeAttribute('disabled');
+  }
 };
 
 // неактивное состояние страницы
@@ -227,7 +227,6 @@ if (priceInput.value > maxValue) {
   priceInput.setCustomValidity('Максимальная доступная цена - 1000000');
   priceInput.reportValidity();
 }
-var cards = Array.from(document.querySelectorAll('.map__card'));
 
 // влияние типа жилья на цену
 var typeOfAccomodation = document.querySelector('#type');
@@ -276,25 +275,33 @@ var setPinAttribute = function () {
   for (var i = 1; i < pins.length; i++) {
     pins[i].setAttribute('data-index-number', i - 1);
   }
-}
+};
 setPinAttribute();
-
+var onPopUpClose = function (card) {
+  card.classList.add('hidden');
+  card.remove();
+};
+var onCardCloseEsc = function (card) {
+  return function (evt) {
+    if (evt.key === 'Escape') {
+      card.classList.add('hidden');
+      card.remove();
+    }
+  };
+};
 var onPinClick = function (evt) {
   var pin = evt.target.closest('.map__pin');
   var j = pin.dataset.indexNumber;
   addAdvertismentCard(advertisments[j]);
-  cards[j].classList.remove('hidden');
-}
+  var card = document.querySelector('.map__card');
+  card.classList.remove('hidden');
+  var cardClose = document.querySelector('.popup__close');
+  cardClose.addEventListener('click', function () {
+    onPopUpClose(card);
+  });
+  document.addEventListener('keydown', function () {
+    onCardCloseEsc(card);
+  });
+};
 mapPins.addEventListener('click', onPinClick);
 
-/*var onPinClose = function () {
-  for (var i = 0; i < 8; i++) {
-  advertisments[i].classList.add('hidden');
-  pin.removeEventListener('click', onAnyPinClick);
-}
-}
-/*var managePopUps = function () {
-  if () {
-
-  }
-}*/

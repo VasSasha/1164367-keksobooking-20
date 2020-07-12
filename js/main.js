@@ -181,6 +181,7 @@ var onPlaceChange = function () {
 mapPinMain.addEventListener('mousedown', onPlaceChange);
 mapPinMain.addEventListener('mousedown', onMainPinClick);
 
+
 var onEnterPress = function (evt) {
   if ((mapPinMain === document.activeElement) && (evt.key === 'Enter')) {
     renderActiveCondition();
@@ -189,7 +190,6 @@ var onEnterPress = function (evt) {
 
 mapPinMain.addEventListener('keydown', onEnterPress);
 // валидация форм
-// поле количества комнат и гостей
 var onFormUse = function () {
   if ((parseInt(roomsSelected.value, 10) !== 100) && (parseInt(guestsSelected.value, 10) === 0)) {
     document.querySelector('#capacity').setCustomValidity('Единственный вариант не для гостей - "100 комнат"');
@@ -304,4 +304,3 @@ var onPinClick = function (evt) {
   document.addEventListener('keydown', onClosePopUpEsc);
 };
 mapPins.addEventListener('click', onPinClick);
-

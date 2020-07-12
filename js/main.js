@@ -277,18 +277,17 @@ var setPinAttribute = function () {
   }
 };
 setPinAttribute();
-var onPopUpClose = function (card) {
-  card.classList.add('hidden');
-  card.remove();
+var closePopUp = function () {
+  document.querySelector('.map__card').classList.add('hidden');
+  document.querySelector('.map__card').remove();
+  document.removeEventListener('keydown', onClosePopUpEsc);
 };
-var onCardCloseEsc = function (card) {
-  return function (evt) {
-    if (evt.key === 'Escape') {
-      card.classList.add('hidden');
-      card.remove();
-    }
-  };
+var onClosePopUpEsc = function (evt) {
+  if (evt.key === 'Escape') {
+    closePopUp();
+  }
 };
+
 var onPinClick = function (evt) {
   var pin = evt.target.closest('.map__pin');
   var j = pin.dataset.indexNumber;
@@ -297,11 +296,9 @@ var onPinClick = function (evt) {
   card.classList.remove('hidden');
   var cardClose = document.querySelector('.popup__close');
   cardClose.addEventListener('click', function () {
-    onPopUpClose(card);
+    closePopUp();
   });
-  document.addEventListener('keydown', function () {
-    onCardCloseEsc(card);
-  });
+  document.addEventListener('keydown', onClosePopUpEsc);
 };
 mapPins.addEventListener('click', onPinClick);
 

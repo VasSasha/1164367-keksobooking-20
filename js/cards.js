@@ -89,5 +89,6 @@
     });
     document.addEventListener('keydown', window.functions.onClosePopUpEsc);
   };
+  window.util.mapPins.addEventListener('click', onPinClick);
   window.addCards = addCards;
 })();

@@ -5,7 +5,6 @@
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var renderAdvertismentPins = function () {
-    var location = window.advertisement.location;
     var advertisements = window.advertisements;
     var fragment = document.createDocumentFragment();
     var template = document.querySelector('#pin').content;

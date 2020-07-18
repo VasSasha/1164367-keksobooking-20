@@ -1,6 +1,7 @@
+
+
 'use strict';
 
-<<<<<<< Updated upstream
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -180,7 +181,6 @@ var onPlaceChange = function () {
 mapPinMain.addEventListener('mousedown', onPlaceChange);
 mapPinMain.addEventListener('mousedown', onMainPinClick);
 
-
 var onEnterPress = function (evt) {
   if ((mapPinMain === document.activeElement) && (evt.key === 'Enter')) {
     renderActiveCondition();
@@ -189,6 +189,7 @@ var onEnterPress = function (evt) {
 
 mapPinMain.addEventListener('keydown', onEnterPress);
 // валидация форм
+// поле количества комнат и гостей
 var onFormUse = function () {
   if ((parseInt(roomsSelected.value, 10) !== 100) && (parseInt(guestsSelected.value, 10) === 0)) {
     document.querySelector('#capacity').setCustomValidity('Единственный вариант не для гостей - "100 комнат"');
@@ -248,24 +249,46 @@ var onTypeInputClick = function () {
     priceInput.setCustomValidity('');
   }
 };
-=======
-(function () {
-  var data = window.data;
-})();
->>>>>>> Stashed changes
 
+priceInput.addEventListener('input', onTypeInputClick);
+typeOfAccomodation.addEventListener('change', onTypeInputClick);
 
-(function () {
-  var functions = window.functionsAll;
-})();
+// поля заезда и выезда
+var checkIn = document.querySelector('#timein');
+var checkOut = document.querySelector('#timeout');
+var checkInListener = function () {
+  checkOut.value = checkIn.value;
+};
+var checkOutListener = function () {
+  checkIn.value = checkOut.value;
+};
+checkIn.addEventListener('change', checkInListener);
+checkOut.addEventListener('change', checkOutListener);
 
-(function () {
-  var cardsArray = window.cardsArray;
-  var cardsInformation = window.cardsInformation;
-  var cards = window.addCards;
-})();
+// валидация формы для фото
+var imgOfHouse = document.querySelector('#images');
+var imgOfHost = document.querySelector('#avatar');
+imgOfHost.setAttribute('accept', 'image/*');
+imgOfHouse.setAttribute('accept', 'image/*');
 
-<<<<<<< Updated upstream
+var pins = Array.from(document.querySelectorAll('.map__pin'));
+var setPinAttribute = function () {
+  for (var i = 1; i < pins.length; i++) {
+    pins[i].setAttribute('data-index-number', i - 1);
+  }
+};
+setPinAttribute();
+var closePopUp = function () {
+  document.querySelector('.map__card').classList.add('hidden');
+  document.querySelector('.map__card').remove();
+  document.removeEventListener('keydown', onClosePopUpEsc);
+};
+var onClosePopUpEsc = function (evt) {
+  if (evt.key === 'Escape') {
+    closePopUp();
+  }
+};
+
 var onPinClick = function (evt) {
   var pin = evt.target.closest('.map__pin');
   if ((!pin) || (pin.classList.contains('map__pin--main'))) {
@@ -282,13 +305,4 @@ var onPinClick = function (evt) {
   document.addEventListener('keydown', onClosePopUpEsc);
 };
 mapPins.addEventListener('click', onPinClick);
-=======
-(function () {
-  var pins = window.pins;
-})();
 
-(function () {
-  var form = window.formFunctions.formConditions;
-  var formValidation = window.formFunctions.formValidation;
-})();
->>>>>>> Stashed changes

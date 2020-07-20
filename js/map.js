@@ -1,10 +1,12 @@
 
 'use strict';
-(function cardsArray() {
+(function () {
   var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var TIMES = ['12:00', '13:00', '14:00'];
   var TYPES = ['flat', 'house', 'palace', 'bungalo'];
   var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+  var PIN_WIDTH = 50;
+  var PIN_HEIGHT = 70;
 
   var createArrayOfAdvertisements = function () {
     var advertisements = [];
@@ -14,7 +16,7 @@
         x: Math.random() * mapPinsBlock.offsetWidth,
         y: 130 + Math.random() * 500
       };
-      window.advertisement = {
+      var advertisement = {
         avatar: 'img/avatars/user0' + i + '.png',
         title: 'заголовок предложения',
         address: location.x + ', ' + location.y,
@@ -29,12 +31,48 @@
         photos: window.functions.getRandomSubarray(PHOTOS),
         location: location
       };
-      advertisements.push(window.advertisement);
+      advertisements.push(advertisement);
     } return advertisements;
   };
-  window.advertisements = createArrayOfAdvertisements();
-  window.cardsArray = cardsArray;
+  var advertisements = createArrayOfAdvertisements();
 
+  var renderAdvertismentPins = function () {
+    var fragment = document.createDocumentFragment();
+    var template = document.querySelector('#pin').content;
+    for (var i = 0; i < 8; i++) {
+      var newAdd = template.cloneNode(true);
+      var btn = newAdd.querySelector('.map__pin');
+      var img = newAdd.querySelector('img');
+      btn.style.top = advertisements[i].location.y + PIN_HEIGHT + 'px';
+      btn.style.left = advertisements[i].location.x + PIN_WIDTH / 2 + 'px';
+      img.src = advertisements[i].avatar;
+      img.alt = advertisements[i].title;
+      fragment.appendChild(newAdd);
+    }
+    window.variables.mapPinsBlock.appendChild(fragment);
+  };
+  renderAdvertismentPins();
+  var pins = Array.from(document.querySelectorAll('.map__pin'));
+  var setPinAttribute = function () {
+    for (var i = 1; i < pins.length; i++) {
+      pins[i].setAttribute('data-index-number', i - 1);
+    }
+  };
+  setPinAttribute();
+
+  // переводит тип жилья
+  var translateAccomodationType = function (type) {
+    var newType;
+    if (type === 'flat') {
+      newType = 'Квартира';
+    } else if (type === 'house') {
+      newType = 'Дом';
+    } else if (type === 'palace') {
+      newType = 'Дворец';
+    } else {
+      newType = 'Бунгало';
+    } return newType;
+  };
   // создается карточка объявления
   var addAdvertismentCard = function (offer) {
     var photos = offer.photos;
@@ -44,7 +82,7 @@
     newOffer.querySelector('.popup__title').title = offer.title;
     newOffer.querySelector('.popup__text--address').textContent = offer.address;
     newOffer.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
-    newOffer.querySelector('.popup__type').textContent = window.functions.translateAccomodationType(offer.type);
+    newOffer.querySelector('.popup__type').textContent = translateAccomodationType(offer.type);
     newOffer.querySelector('.popup__text--capacity').textContent = offer.rooms + ' ' + 'комнат(-ы) для' + ' ' + offer.guests + ' ' + 'гостей';
     newOffer.querySelector('.popup__text--time').textContent = 'Заезд после' + ' ' + offer.checkin + ', выезд до ' + offer.checkout;
     newOffer.querySelector('.popup__features').textContent = offer.features;
@@ -70,21 +108,30 @@
     window.variables.map.insertBefore(newOffer, container);
   };
   window.addAdvertismentCard = addAdvertismentCard;
-
+  var closePopUp = function () {
+    document.querySelector('.map__card').classList.add('hidden');
+    document.querySelector('.map__card').remove();
+    document.removeEventListener('keydown', onClosePopUpEsc);
+  };
+  var onClosePopUpEsc = function (evt) {
+    if (evt.key === 'Escape') {
+      closePopUp();
+    }
+  };
   var onPinClick = function (evt) {
     var pin = evt.target.closest('.map__pin');
     if ((!pin) || (pin.classList.contains('map__pin--main'))) {
       return;
     }
     var j = pin.dataset.indexNumber;
-    window.addAdvertismentCard(window.advertisements[j]);
+    addAdvertismentCard(advertisements[j]);
     var card = document.querySelector('.map__card');
     card.classList.remove('hidden');
     var cardClose = document.querySelector('.popup__close');
     cardClose.addEventListener('click', function () {
-      window.functions.closePopUp();
+      closePopUp();
     });
-    document.addEventListener('keydown', window.functions.onClosePopUpEsc);
+    document.addEventListener('keydown', onClosePopUpEsc);
   };
   window.variables.mapPinsBlock.addEventListener('click', onPinClick);
 })();

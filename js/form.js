@@ -6,12 +6,12 @@
   var adForm = document.querySelector('.ad-form');
   // неактивное состояние страницы
   var renderNonActiveCondition = function () {
-    window.funtions.getFormsBlocked(adFieldsets);
-    window.funtions.getFormsBlocked(mapFilters);
-    window.util.map.classList.add('map--faded');
+    window.functions.getFormsBlocked(adFieldsets);
+    window.functions.getFormsBlocked(mapFilters);
+    window.variables.map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
-    var mapPinX = parseInt(window.util.mainPin.style.left, 10) + 33;
-    var mapPinY = parseInt(window.util.mainPin.style.top, 10) + 33;
+    var mapPinX = parseInt(window.variables.mainPin.style.left, 10) + 33;
+    var mapPinY = parseInt(window.variables.mainPin.style.top, 10) + 33;
     document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
   };
 
@@ -20,16 +20,16 @@
 
   // активное состояние страницы
   var renderActiveCondition = function () {
-    window.funtions.getFormsUnblocked(adFieldsets);
-    window.funtions.getFormsUnblocked(mapFilters);
-    window.util.map.classList.remove('map--faded');
+    window.functions.getFormsUnblocked(adFieldsets);
+    window.functions.getFormsUnblocked(mapFilters);
+    window.variables.map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     var addressInput = document.querySelector('#address');
     addressInput.setAttribute('disabled', true);
 
   };
-  window.util.mainPin.addEventListener('mousedown', window.funtions.onMainPinClick);
-  window.util.mainPin.addEventListener('keydown', window.funtions.onMainPinEnterPress);
+  window.variables.mainPin.addEventListener('mousedown', window.functions.onMainPinClick);
+  window.variables.mainPin.addEventListener('keydown', window.functions.onMainPinEnterPress);
   window.formFunctions = {
     renderActiveCondition: renderActiveCondition,
     renderNonActiveCondition: renderNonActiveCondition,
@@ -46,18 +46,18 @@
   document.querySelector('#title').addEventListener('input', window.functions.getTitleValid);
   // поле цены за ночь
   var getPriceInputValid = function () {
-    window.util.priceInput.setAttribute('required', true);
+    window.variables.priceInput.setAttribute('required', true);
     var maxValue = 1000000;
-    if (window.util.priceInput.value > maxValue) {
-      window.util.priceInput.setCustomValidity('Максимальная доступная цена - 1000000');
-      window.util.priceInput.reportValidity();
+    if (window.variables.priceInput.value > maxValue) {
+      window.variables.priceInput.setCustomValidity('Максимальная доступная цена - 1000000');
+      window.variables.priceInput.reportValidity();
     }
   };
 
   getPriceInputValid();
 
   // влияние типа жилья на цену
-  window.util.priceInput.addEventListener('input', window.functions.getTypeInputValid);
+  window.variables.priceInput.addEventListener('input', window.functions.getTypeInputValid);
   document.querySelector('#type').addEventListener('change', window.functions.getTypeInputValid);
 
   // поля заезда и выезда
@@ -67,9 +67,11 @@
   checkOut.addEventListener('change', window.functions.checkOutListener);
 
   // валидация формы для фото
-  window.util.imgOfHost.setAttribute('accept', 'image/*');
-  window.util.imgOfHouse.setAttribute('accept', 'image/*');
-  window.util.mainPin.addEventListener('mousedown', window.functions.onMainPinPlaceChange);
+  var imgOfHouse = document.querySelector('#images');
+  var imgOfHost = document.querySelector('#avatar');
+  imgOfHost.setAttribute('accept', 'image/*');
+  imgOfHouse.setAttribute('accept', 'image/*');
+  window.variables.mainPin.addEventListener('mousedown', window.functions.onMainPinPlaceChange);
   window.formValidation = formValidation;
 })();
 

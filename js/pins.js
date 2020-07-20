@@ -18,8 +18,14 @@
       img.alt = advertisements[i].title;
       fragment.appendChild(newAdd);
     }
-    window.util.mapPinsBlock.appendChild(fragment);
+    window.variables.mapPinsBlock.appendChild(fragment);
   };
   renderAdvertismentPins();
-  window.pins = pins;
+  var pins = Array.from(document.querySelectorAll('.map__pin'));
+  var setPinAttribute = function () {
+    for (var i = 1; i < pins.length; i++) {
+      pins[i].setAttribute('data-index-number', i - 1);
+    }
+  };
+  setPinAttribute();
 })();

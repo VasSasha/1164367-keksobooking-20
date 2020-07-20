@@ -9,7 +9,7 @@
   var createArrayOfAdvertisements = function () {
     var advertisements = [];
     for (var i = 1; i <= 8; i++) {
-      var mapPinsBlock = window.util.mapPinsBlock;
+      var mapPinsBlock = window.variables.mapPinsBlock;
       var location = {
         x: Math.random() * mapPinsBlock.offsetWidth,
         y: 130 + Math.random() * 500
@@ -34,8 +34,7 @@
   };
   window.advertisements = createArrayOfAdvertisements();
   window.cardsArray = cardsArray;
-})();
-(function cardsInformation() {
+
   // создается карточка объявления
   var addAdvertismentCard = function (offer) {
     var photos = offer.photos;
@@ -67,13 +66,11 @@
     }
 
     authorAvatar.src = offer.avatar;
-    var container = window.util.map.querySelector('.map__filters-container');
-    window.util.map.insertBefore(newOffer, container);
+    var container = window.variables.map.querySelector('.map__filters-container');
+    window.variables.map.insertBefore(newOffer, container);
   };
   window.addAdvertismentCard = addAdvertismentCard;
-  window.cardsInformation = cardsInformation;
-})();
-(function addCards() {
+
   var onPinClick = function (evt) {
     var pin = evt.target.closest('.map__pin');
     if ((!pin) || (pin.classList.contains('map__pin--main'))) {
@@ -89,6 +86,5 @@
     });
     document.addEventListener('keydown', window.functions.onClosePopUpEsc);
   };
-  window.util.mapPins.addEventListener('click', onPinClick);
-  window.addCards = addCards;
+  window.variables.mapPinsBlock.addEventListener('click', onPinClick);
 })();

@@ -1,7 +1,7 @@
 
 'use strict';
 
-(function pins() {
+(function () {
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var renderAdvertismentPins = function () {

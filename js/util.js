@@ -49,25 +49,25 @@
   };
 
   var onMainPinEnterPress = function (evt) {
-    if ((window.util.mainPin === document.activeElement) && (evt.key === 'Enter')) {
+    if ((window.variables.mainPin === document.activeElement) && (evt.key === 'Enter')) {
       window.formFunctions.renderActiveCondition();
     }
   };
 
   var onMainPinPlaceChange = function () {
-    var mapPinX = parseInt(window.util.mainPin.style.left, 10) + 33;
-    var mapPinY = parseInt(window.util.mainPin.style.top, 10) + 65 + 17;
+    var mapPinX = parseInt(window.variables.mainPin.style.left, 10) + 33;
+    var mapPinY = parseInt(window.variables.mainPin.style.top, 10) + 65 + 17;
     document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
   };
   // валидирует форму выдобра количества комнат и гостей
   var onFormUse = function () {
-    if ((parseInt(window.util.roomsSelected.value, 10) !== 100) && (parseInt(window.util.guestsSelected.value, 10) === 0)) {
+    if ((parseInt(window.variables.roomsSelected.value, 10) !== 100) && (parseInt(window.variables.guestsSelected.value, 10) === 0)) {
       document.querySelector('#capacity').setCustomValidity('Единственный вариант не для гостей - "100 комнат"');
       document.querySelector('#capacity').reportValidity();
-    } else if ((parseInt(window.util.roomsSelected.value, 10) === 100) && (parseInt(window.util.guestsSelected.value, 10) !== 0)) {
+    } else if ((parseInt(window.variables.roomsSelected.value, 10) === 100) && (parseInt(window.variables.guestsSelected.value, 10) !== 0)) {
       document.querySelector('#capacity').setCustomValidity('Данное количество комнат не предназначено для гостей');
       document.querySelector('#capacity').reportValidity();
-    } else if (parseInt(window.util.roomsSelected.value, 10) < parseInt(window.util.guestsSelected.value, 10)) {
+    } else if (parseInt(window.variables.roomsSelected.value, 10) < parseInt(window.variables.guestsSelected.value, 10)) {
       document.querySelector('#capacity').setCustomValidity('Количество гостей не должно превышать количество комнат.');
       document.querySelector('#capacity').reportValidity();
     } else {
@@ -109,17 +109,12 @@
     }
   };
   var checkInListener = function () {
-    window.util.checkOut.value = window.util.checkIn.value;
+    window.variables.checkOut.value = window.variables.checkIn.value;
   };
   var checkOutListener = function () {
-    window.util.checkIn.value = window.util.checkOut.value;
+    window.variables.checkIn.value = window.variables.checkOut.value;
   };
-  var setPinAttribute = function () {
-    for (var i = 1; i < window.util.pins.length; i++) {
-      window.util.pins[i].setAttribute('data-index-number', i - 1);
-    }
-  };
-  setPinAttribute();
+
   var closePopUp = function () {
     document.querySelector('.map__card').classList.add('hidden');
     document.querySelector('.map__card').remove();

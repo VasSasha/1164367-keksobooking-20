@@ -54,11 +54,7 @@
       renderActiveCondition();
     }
   };
-  var onMainPinPlaceChange = function () {
-    var mapPinX = parseInt(window.variables.mainPin.style.left, 10) + 33;
-    var mapPinY = parseInt(window.variables.mainPin.style.top, 10) + 65 + 17;
-    document.querySelector('#address').value = mapPinX + ', ' + mapPinY;
-  };
+
   window.variables.mainPin.addEventListener('mousedown', onMainPinClick);
   window.variables.mainPin.addEventListener('keydown', onMainPinEnterPress);
 
@@ -152,7 +148,6 @@
   var imgOfHost = document.querySelector('#avatar');
   imgOfHost.setAttribute('accept', 'image/*');
   imgOfHouse.setAttribute('accept', 'image/*');
-  window.variables.mainPin.addEventListener('mousedown', onMainPinPlaceChange);
 
 })();
 

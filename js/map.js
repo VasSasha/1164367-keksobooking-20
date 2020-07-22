@@ -165,7 +165,7 @@
         x = mapPins.offsetWidth - 32;
       } else if (y < 130) {
         y = 130;
-      } else if (x < 0) {
+      } else if (x < -32) {
         x = 0 - 32;
       }
 

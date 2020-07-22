@@ -134,4 +134,41 @@
     document.addEventListener('keydown', onClosePopUpEsc);
   };
   window.variables.mapPinsBlock.addEventListener('click', onPinClick);
+  var mainPin = window.variables.mainPin;
+  mainPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY,
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+      
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY,
+      };
+
+      var startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY,
+      };
+
+      mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+      mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+
+    };
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      var xPosition = upEvt.clientX;
+      var yPosition = upEvt.clientY;
+      window.functions.getMainPinCoords(xPosition, yPosition, 40, 44);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    }
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  
+  })
 })();

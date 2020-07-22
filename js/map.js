@@ -142,10 +142,6 @@
       y: evt.clientY,
     };
 
-    var getMainPinCoords = function (x, y, width, height) {
-      document.querySelector('#address').value = (x - 1 / 2 * width) + ', ' + (y - height);
-    };
-
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
@@ -165,19 +161,19 @@
 
       if (y > 630) {
         y = 630;
-      } else if (x > mapPins.offsetWidth) {
-        x = mapPins.offsetWidth - 60;
+      } else if (x > mapPins.offsetWidth - 32) {
+        x = mapPins.offsetWidth - 32;
       } else if (y < 130) {
         y = 130;
       } else if (x < 0) {
-        x = 40;
+        x = 0 - 32;
       }
 
       mainPin.style.top = y + 'px';
       mainPin.style.left = x + 'px';
-      var xPosition = moveEvt.clientX;
-      var yPosition = moveEvt.clientY;
-      getMainPinCoords(xPosition, yPosition, 40, 44);
+      var xPosition = x;
+      var yPosition = y;
+      document.querySelector('#address').value = (xPosition - 1 / 2 * 40) + ', ' + (yPosition - 44);
     };
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();

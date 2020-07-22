@@ -144,13 +144,13 @@
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
-      
+
       var shift = {
         x: startCoords.x - moveEvt.clientX,
         y: startCoords.y - moveEvt.clientY,
       };
 
-      var startCoords = {
+      startCoords = {
         x: moveEvt.clientX,
         y: moveEvt.clientY,
       };
@@ -166,9 +166,8 @@
       window.functions.getMainPinCoords(xPosition, yPosition, 40, 44);
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-    }
+    };
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
-  
-  })
+  });
 })();

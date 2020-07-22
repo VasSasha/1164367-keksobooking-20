@@ -154,32 +154,25 @@
         x: moveEvt.clientX,
         y: moveEvt.clientY,
       };
-
-      mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
-      mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
-      /* if (mainPin.offsetTop > 630) {
-        newY = 630;
-      } else if (mainPin.offsetLeft > maxX) {
-        newX = maxX - 50;
-      } else if (mainPin.offsetRight < 0) {
-        newX = 0;
-      } else if (newY < 130) {
-        newY = 130;
-      } */
+      var x = (mainPin.offsetLeft - shift.x);
+      var y = (mainPin.offsetTop - shift.y);
+      var mapPins = window.variables.mapPinsBlock;
+      if (y > 630) {
+        y = 630;
+      } else if (x > mapPins.offsetHeight) {
+        x = mapPins.offsetHeight - 50;
+      } else if (y < 130) {
+        y = 130;
+      } else if (x < 0) {
+        x = 40;
+      }
+      mainPin.style.top = y + 'px';
+      mainPin.style.left = x + 'px';
     };
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       var xPosition = upEvt.clientX;
       var yPosition = upEvt.clientY;
-      if (xPosition > window.variables.mapPinsBlock.offsetHeight) {
-        xPosition = window.variables.mapPinsBlock.offsetHeight - 44;
-      } else if (xPosition < 0) {
-        xPosition = 44;
-      } else if (yPosition > 630) {
-        yPosition = 630;
-      } else if (yPosition < 130) {
-        yPosition = 130;
-      }
       window.functions.getMainPinCoords(xPosition, yPosition, 40, 44);
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);

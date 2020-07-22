@@ -16,12 +16,8 @@
       newArr.push(arr[i]);
     } return newArr;
   };
-  var getMainPinCoords = function (x, y, width, height) {
-    document.querySelector('#address').value = (x - 1 / 2 * width) + ', ' + (y - height);
-  };
   window.functions = {
     getRandomSubarray: getRandomSubarray,
-    getRandomElement: getRandomElement,
-    getMainPinCoords: getMainPinCoords,
+    getRandomElement: getRandomElement
   };
 })();

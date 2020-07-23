@@ -171,7 +171,7 @@
 
       mainPin.style.top = y + 'px';
       mainPin.style.left = x + 'px';
-      document.querySelector('#address').value = (x - 32) + ', ' + (y - 87);
+      document.querySelector('#address').value = (x + 32) + ', ' + (y + 80);
     };
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();

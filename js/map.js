@@ -134,4 +134,51 @@
     document.addEventListener('keydown', onClosePopUpEsc);
   };
   window.variables.mapPinsBlock.addEventListener('click', onPinClick);
+  var mainPin = window.variables.mainPin;
+  mainPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY,
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY,
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY,
+      };
+
+      var x = (mainPin.offsetLeft - shift.x);
+      var y = (mainPin.offsetTop - shift.y);
+      var mapPins = window.variables.mapPinsBlock;
+
+      if (y > 630) {
+        y = 630;
+      } else if (x > mapPins.offsetWidth - 32) {
+        x = mapPins.offsetWidth - 32;
+      } else if (y < 130) {
+        y = 130;
+      } else if (x < -32) {
+        x = -32;
+      }
+
+      mainPin.style.top = y + 'px';
+      mainPin.style.left = x + 'px';
+      document.querySelector('#address').value = (x + 32) + ', ' + (y + 80);
+    };
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
 })();

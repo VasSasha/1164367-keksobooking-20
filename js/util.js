@@ -16,9 +16,8 @@
       newArr.push(arr[i]);
     } return newArr;
   };
-
   window.functions = {
     getRandomSubarray: getRandomSubarray,
-    getRandomElement: getRandomElement,
+    getRandomElement: getRandomElement
   };
 })();

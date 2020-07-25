@@ -1,12 +1,12 @@
 
 'use strict';
 (function () {
-  var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+  var PIN_WIDTH = 50;
+  var PIN_HEIGHT = 70;
+  /* var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var TIMES = ['12:00', '13:00', '14:00'];
   var TYPES = ['flat', 'house', 'palace', 'bungalo'];
   var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
 
   var createArrayOfAdvertisements = function () {
     var advertisements = [];
@@ -33,9 +33,8 @@
       };
       advertisements.push(advertisement);
     } return advertisements;
-  };
-  var advertisements = createArrayOfAdvertisements();
-
+  };*/
+  var advertisements = window.load();
   var renderAdvertismentPins = function () {
     var fragment = document.createDocumentFragment();
     var template = document.querySelector('#pin').content;
@@ -108,32 +107,6 @@
     window.variables.map.insertBefore(newOffer, container);
   };
   window.addAdvertismentCard = addAdvertismentCard;
-  var closePopUp = function () {
-    document.querySelector('.map__card').classList.add('hidden');
-    document.querySelector('.map__card').remove();
-    document.removeEventListener('keydown', onClosePopUpEsc);
-  };
-  var onClosePopUpEsc = function (evt) {
-    if (evt.key === 'Escape') {
-      closePopUp();
-    }
-  };
-  var onPinClick = function (evt) {
-    var pin = evt.target.closest('.map__pin');
-    if ((!pin) || (pin.classList.contains('map__pin--main'))) {
-      return;
-    }
-    var j = pin.dataset.indexNumber;
-    addAdvertismentCard(advertisements[j]);
-    var card = document.querySelector('.map__card');
-    card.classList.remove('hidden');
-    var cardClose = document.querySelector('.popup__close');
-    cardClose.addEventListener('click', function () {
-      closePopUp();
-    });
-    document.addEventListener('keydown', onClosePopUpEsc);
-  };
-  window.variables.mapPinsBlock.addEventListener('click', onPinClick);
   var mainPin = window.variables.mainPin;
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -180,5 +153,32 @@
     };
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+    var closePopUp = function () {
+      document.querySelector('.map__card').classList.add('hidden');
+      document.querySelector('.map__card').remove();
+      document.removeEventListener('keydown', onClosePopUpEsc);
+    };
+    var onClosePopUpEsc = function (evt) {
+      if (evt.key === 'Escape') {
+        closePopUp();
+      }
+    };
+    var onPinClick = function (evt) {
+      var pin = evt.target.closest('.map__pin');
+      if ((!pin) || (pin.classList.contains('map__pin--main'))) {
+        return;
+      }
+      var j = pin.dataset.indexNumber;
+      addAdvertismentCard(advertisements[j]);
+      var card = document.querySelector('.map__card');
+      card.classList.remove('hidden');
+      var cardClose = document.querySelector('.popup__close');
+      cardClose.addEventListener('click', function () {
+        closePopUp();
+      });
+      document.addEventListener('keydown', onClosePopUpEsc);
+    };
+    window.variables.mapPinsBlock.addEventListener('click', onPinClick);
   });
 })();
+

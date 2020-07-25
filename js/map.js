@@ -47,6 +47,10 @@
         img.alt = advertisements[i].offer.title;
         fragment.appendChild(newAdd);
       }
+      var pins = Array.from(document.querySelectorAll('.map__pin'));
+      for (i = 1; i < pins.length; i++) {
+        pins[i].setAttribute('data-index-number', i - 1);
+      }
       window.variables.mapPinsBlock.appendChild(fragment);
     };
             // переводит тип жилья
@@ -95,18 +99,6 @@ var addAdvertismentCard = function (offer) {
       var container = window.variables.map.querySelector('.map__filters-container');
       window.variables.map.insertBefore(newOffer, container);
     };
-
-  var onSuccess = function (advertisements) {
-    console.log(advertisements);
-    renderAdvertismentPins(advertisements);
-
-    var pins = Array.from(document.querySelectorAll('.map__pin'));
-    var setPinAttribute = function () {
-      for (var i = 1; i < pins.length; i++) {
-        pins[i].setAttribute('data-index-number', i - 1);
-      }
-    };
-    setPinAttribute();
     var closePopUp = function () {
       document.querySelector('.map__card').classList.add('hidden');
       document.querySelector('.map__card').remove();
@@ -131,8 +123,12 @@ var addAdvertismentCard = function (offer) {
         closePopUp();
       });
       document.addEventListener('keydown', onClosePopUpEsc);
-    window.variables.mapPinsBlock.addEventListener('click', onPinClick);
   } 
+
+  var onSuccess = function (advertisements) {
+    console.log(advertisements);
+    renderAdvertismentPins(advertisements);
+    window.variables.mapPinsBlock.addEventListener('click', onPinClick);
   };
   window.load(onSuccess);
   var mainPin = window.variables.mainPin;

@@ -34,9 +34,7 @@
       advertisements.push(advertisement);
     } return advertisements;
   };*/
-  var onSuccess = function (advertisements) {
-    console.log(advertisements);
-    var renderAdvertismentPins = function () {
+      var renderAdvertismentPins = function (advertisements) {
       var fragment = document.createDocumentFragment();
       var template = document.querySelector('#pin').content;
       for (var i = 0; i < 8; i++) {
@@ -45,15 +43,27 @@
         var img = newAdd.querySelector('img');
         btn.style.top = advertisements[i].location.y + PIN_HEIGHT + 'px';
         btn.style.left = advertisements[i].location.x + PIN_WIDTH / 2 + 'px';
-        img.src = advertisements[i].avatar;
-        img.alt = advertisements[i].title;
+        img.src = advertisements[i].author.avatar;
+        img.alt = advertisements[i].offer.title;
         fragment.appendChild(newAdd);
       }
       window.variables.mapPinsBlock.appendChild(fragment);
     };
-    renderAdvertismentPins();
-    // создается карточка объявления
-    var addAdvertismentCard = function (offer) {
+            // переводит тип жилья
+  var translateAccomodationType = function (type) {
+    var newType;
+    if (type === 'flat') {
+      newType = 'Квартира';
+    } else if (type === 'house') {
+      newType = 'Дом';
+    } else if (type === 'palace') {
+      newType = 'Дворец';
+    } else {
+      newType = 'Бунгало';
+    } return newType;
+  };
+        // создается карточка объявления
+var addAdvertismentCard = function (offer) {
       var photos = offer.photos;
       var newTemplate = document.querySelector('#card').content;
       var newOffer = newTemplate.cloneNode(true);
@@ -81,11 +91,15 @@
         }
         blockPhotos.appendChild(fragment);
       }
-
       authorAvatar.src = offer.avatar;
       var container = window.variables.map.querySelector('.map__filters-container');
       window.variables.map.insertBefore(newOffer, container);
     };
+
+  var onSuccess = function (advertisements) {
+    console.log(advertisements);
+    renderAdvertismentPins(advertisements);
+
     var pins = Array.from(document.querySelectorAll('.map__pin'));
     var setPinAttribute = function () {
       for (var i = 1; i < pins.length; i++) {
@@ -117,23 +131,10 @@
         closePopUp();
       });
       document.addEventListener('keydown', onClosePopUpEsc);
-    };
     window.variables.mapPinsBlock.addEventListener('click', onPinClick);
+  } 
   };
   window.load(onSuccess);
-  // переводит тип жилья
-  var translateAccomodationType = function (type) {
-    var newType;
-    if (type === 'flat') {
-      newType = 'Квартира';
-    } else if (type === 'house') {
-      newType = 'Дом';
-    } else if (type === 'palace') {
-      newType = 'Дворец';
-    } else {
-      newType = 'Бунгало';
-    } return newType;
-  };
   var mainPin = window.variables.mainPin;
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();

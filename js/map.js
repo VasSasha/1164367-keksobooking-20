@@ -77,6 +77,9 @@
     }
   };
   var onPinClick = function (advertisements, evt) {
+    if (window.variables.map.classList.contains('map--faded')) {
+      return;
+    }
     var pin = evt.target.closest('.map__pin');
     if ((!pin) || (pin.classList.contains('map__pin--main'))) {
       return;
@@ -97,11 +100,7 @@
   var onSuccess = function (advertisements) {
     renderAdvertismentPins(advertisements);
     onPinClick = onPinClick.bind(null, advertisements);
-    if (window.variables.map.classList.contains('map--active')) {
       window.variables.mapPinsBlock.addEventListener('click', onPinClick);
-    } else {
-      return;
-    }
   };
   window.load(onSuccess);
   var mainPin = window.variables.mainPin;

@@ -48,7 +48,7 @@
     if (evt.button === 0) {
       renderActiveCondition();
       for (var i = 1; i < pins.length; i++) {
-        pins[i].display = 'block';
+        pins[i].classList.remove('hidden');
       }
     }
   };
@@ -57,7 +57,7 @@
     if ((window.variables.mainPin === document.activeElement) && (evt.key === 'Enter')) {
       renderActiveCondition();
       for (var i = 1; i < pins.length; i++) {
-        pins[i].style.display = 'block';
+        pins[i].classList.remove('hidden');
       }
     }
   };
@@ -161,22 +161,17 @@
     form.reset();
     renderNonActiveCondition();
     for (var i = 1; i < pins.length; i ++) {
-      pins[i].display = 'none';
+      pins[i].classList.add('hidden');
     }
     if (document.querySelector('.card')) {
       document.querySelector('.card').remove();
     }
-    if (document.querySelector('.error')) {
-     document.removeEventListener('click', onErrorClose);
-    } else if (document.querySelector('.success')) {
-      document.removeEventListener('click', onSuccessClose);
-    }
   }
   var removeMessegeOnEsc = function (element, evt) {
      if (evt.key === 'Escape') {
-      removeMesege(element)
+      removeMessage(element)
     }
-    document.removeEventListener('keydown', removeSuccessOnEsc);
+    document.removeEventListener('keydown', removeMessegeOnEsc);
   }
 
   var onSuccess = function () {
@@ -184,10 +179,9 @@
       var messege = newTemplate.cloneNode(true);
       messege.children.textContent = document.querySelector('.success__message');
       document.querySelector('main').appendChild(messege);
-      var onSuccessClose = function () {
+       messege.addEventListener('click', function () {
         removeMessage(messege);
-      }
-       document.addEventListener('click', onSuccessClose);
+      });
       removeMessegeOnEsc = removeMessegeOnEsc.bind(null, messege);
       document.addEventListener('keydown', removeMessegeOnEsc);
 
@@ -199,12 +193,11 @@
     errorContainer.querySelector('.error__message').textContent = 'Ошибка загрузки объявления';
     errorContainer.querySelector('.error__button').textContent = 'Попробовать снова';
     document.querySelector('main').appendChild(errorContainer);
-    var onErrorClose = function () {
+    errorContainer.addEventListener('click', function () {
         removeMessage(errorContainer);
-      }
-    document.addEventListener('click', onErrorClose);
-      removeSuccessOnEsc = removeSuccessOnEsc.bind(null, errorContainer);
-      document.addEventListener('keydown', removeMessegeOnEsc);
+      });
+      removeMessegeOnEsc = removeMessegeOnEsc.bind(null, errorContainer);
+      errorContainer.addEventListener('keydown', removeMessegeOnEsc);
   }
   
   form.addEventListener('submit', function (evt) {

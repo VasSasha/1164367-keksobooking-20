@@ -1,10 +1,17 @@
 'use strict';
 
 (function () {
-  var URL = 'https://javascript.pages.academy/keksobooking/data';
-  window.upload = function (data) {
+  var URL = 'https://javascript.pages.academy/keksobooking';
+  window.upload = function (data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', URL);
+    xhr.open('POST', URL);
     xhr.send(data);
-  }
+    xhr.addEventListener('load', function () {
+      if (xhr.status === 200) {
+    	onSuccess();
+    } else {
+    	  onError();
+    }
+    });
+  };
 })();

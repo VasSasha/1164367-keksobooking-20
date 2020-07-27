@@ -3,8 +3,9 @@
 
 (function () {
   var adFieldsets = document.querySelectorAll('.ad-form fieldset');
-  var mapFilters = document.querySelector('.map__filters fieldset');
+  var mapFilters = document.querySelectorAll('.map__filters fieldset');
   var adForm = document.querySelector('.ad-form');
+  var pins = Array.from(document.querySelectorAll('.map__pin'));
   // блокирует формы
   var getFormsBlocked = function (arr) {
     for (var i = 0; i < arr.length; i++) {
@@ -38,20 +39,26 @@
     getFormsUnblocked(mapFilters);
     window.variables.map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
+    window.variables.map.classList.add('map--active');
     var addressInput = document.querySelector('#address');
-    addressInput.setAttribute('disabled', true);
-
+    addressInput.setAttribute('readonly', true);
   };
 
   var onMainPinClick = function (evt) {
     if (evt.button === 0) {
       renderActiveCondition();
+      for (var i = 1; i < pins.length; i++) {
+        pins[i].display = 'block';
+      }
     }
   };
 
   var onMainPinEnterPress = function (evt) {
     if ((window.variables.mainPin === document.activeElement) && (evt.key === 'Enter')) {
       renderActiveCondition();
+      for (var i = 1; i < pins.length; i++) {
+        pins[i].style.display = 'block';
+      }
     }
   };
 
@@ -148,6 +155,62 @@
   var imgOfHost = document.querySelector('#avatar');
   imgOfHost.setAttribute('accept', 'image/*');
   imgOfHouse.setAttribute('accept', 'image/*');
+  var form = document.querySelector('.ad-form');
+  var removeMessage = function (element) {
+    element.remove();
+    form.reset();
+    renderNonActiveCondition();
+    for (var i = 1; i < pins.length; i ++) {
+      pins[i].display = 'none';
+    }
+    if (document.querySelector('.card')) {
+      document.querySelector('.card').remove();
+    }
+    if (document.querySelector('.error')) {
+     document.removeEventListener('click', onErrorClose);
+    } else if (document.querySelector('.success')) {
+      document.removeEventListener('click', onSuccessClose);
+    }
+  }
+  var removeMessegeOnEsc = function (element, evt) {
+     if (evt.key === 'Escape') {
+      removeMesege(element)
+    }
+    document.removeEventListener('keydown', removeSuccessOnEsc);
+  }
+
+  var onSuccess = function () {
+      var newTemplate = document.querySelector('#success').content.querySelector('div');
+      var messege = newTemplate.cloneNode(true);
+      messege.children.textContent = document.querySelector('.success__message');
+      document.querySelector('main').appendChild(messege);
+      var onSuccessClose = function () {
+        removeMessage(messege);
+      }
+       document.addEventListener('click', onSuccessClose);
+      removeMessegeOnEsc = removeMessegeOnEsc.bind(null, messege);
+      document.addEventListener('keydown', removeMessegeOnEsc);
+
+  };
+
+  var onError = function () {
+    var newTemplate = document.querySelector('#error').content.querySelector('div');
+    var  errorContainer = newTemplate.cloneNode(true);
+    errorContainer.querySelector('.error__message').textContent = 'Ошибка загрузки объявления';
+    errorContainer.querySelector('.error__button').textContent = 'Попробовать снова';
+    document.querySelector('main').appendChild(errorContainer);
+    var onErrorClose = function () {
+        removeMessage(errorContainer);
+      }
+    document.addEventListener('click', onErrorClose);
+      removeSuccessOnEsc = removeSuccessOnEsc.bind(null, errorContainer);
+      document.addEventListener('keydown', removeMessegeOnEsc);
+  }
+  
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.upload(new FormData(form), onSuccess, onError);
+})
 
 })();
 

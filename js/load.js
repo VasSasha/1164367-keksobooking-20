@@ -2,7 +2,7 @@
 
 (function () {
   var URL = 'https://javascript.pages.academy/keksobooking/data';
-  window.load = function (onAdvertisementsLoad) {
+  window.load = function (onSuccess) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
@@ -10,7 +10,7 @@
     xhr.send();
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        window.map.onAdvertisementsLoad(xhr.response);
+        onSuccess(xhr.response);
       } /* else {
     		onError('Статус ответа: ' + xhr.status);
     	}*/

@@ -103,8 +103,8 @@
     window.variables.mapPinsBlock.addEventListener('click', onPinClick);
   };
   window.map = {
-   onAdvertisementsLoad: onAdvertisementsLoad,
-  }
+    onAdvertisementsLoad: onAdvertisementsLoad,
+  };
   window.load(window.map.onAdvertisementsLoad);
 
   var mainPin = window.variables.mainPin;

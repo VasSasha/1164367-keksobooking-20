@@ -102,18 +102,8 @@
     };
     window.variables.mapPinsBlock.addEventListener('click', onPinClick);
   };
-<<<<<<< Updated upstream
-  window.load(onAdvertisementsLoad);
 
-=======
-  window.load(window.map.onAdvertisementsLoad);
-  window.map = {
-    onAdvertisementsLoad: onAdvertisementsLoad,
-    renderAdvertismentPins: renderAdvertismentPins,
-    addAdvertismentCard: addAdvertismentCardб
-    onAdvertisementsLoad: onAdvertisementsLoad
-  };
->>>>>>> Stashed changes
+  window.load(onAdvertisementsLoad);
   var mainPin = window.variables.mainPin;
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -182,8 +172,5 @@
     onAdvertisementsLoad(newPins);
   }
   housingType.addEventListener('change', onTypeChange);
-  window.map = {
-   onAdvertisementsLoad: onAdvertisementsLoad,
-  };
 })();
 

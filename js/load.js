@@ -2,19 +2,22 @@
 
 (function () {
   var URL = 'https://javascript.pages.academy/keksobooking/data';
-  window.load = function (onAdvertisementsLoad) {
+  window.load = function (onSuccess) {
     var xhr = new XMLHttpRequest();
 
+    xhr.open('GET', URL, true);
     xhr.responseType = 'json';
-    xhr.open('GET', URL);
     xhr.send();
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        window.map.onAdvertisementsLoad(xhr.response);
+        onSuccess(xhr.response);
       } /* else {
     		onError('Статус ответа: ' + xhr.status);
     	}*/
     });
-
+    var data = xhr.response;
+    window.loadData = {
+      data: data
+    };
   };
 })();

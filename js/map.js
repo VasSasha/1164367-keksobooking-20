@@ -5,6 +5,9 @@
   var PIN_HEIGHT = 70;
 
   var renderAdvertismentPins = function (advertisements) {
+    if (window.variables.map.classList.contains('map--faded')) {
+      return;
+    }
     var fragment = document.createDocumentFragment();
     var template = document.querySelector('#pin').content;
     for (var i = 0; i < 6; i++) {
@@ -76,7 +79,7 @@
       closePopUp();
     }
   };
-  window.onSuccess = function (advertisements) {
+  var onAdvertisementsLoad = function (advertisements) {
     renderAdvertismentPins(advertisements);
     var onPinClick = function (evt) {
       if (window.variables.map.classList.contains('map--faded')) {
@@ -99,7 +102,10 @@
     };
     window.variables.mapPinsBlock.addEventListener('click', onPinClick);
   };
-  window.load(window.onSuccess);
+  window.map = {
+   onAdvertisementsLoad: onAdvertisementsLoad,
+  }
+  window.load(window.map.onAdvertisementsLoad);
   var mainPin = window.variables.mainPin;
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();

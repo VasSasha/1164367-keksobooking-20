@@ -5,7 +5,6 @@
   var adFieldsets = document.querySelectorAll('.ad-form fieldset');
   var mapFilters = document.querySelectorAll('.map__filters fieldset');
   var adForm = document.querySelector('.ad-form');
-  var pins = Array.from(document.querySelectorAll('.map__pin'));
   // блокирует формы
   var getFormsBlocked = function (arr) {
     for (var i = 0; i < arr.length; i++) {
@@ -42,23 +41,18 @@
     window.variables.map.classList.add('map--active');
     var addressInput = document.querySelector('#address');
     addressInput.setAttribute('readonly', true);
+    window.load(window.onSuccess);
   };
 
   var onMainPinClick = function (evt) {
     if (evt.button === 0) {
       renderActiveCondition();
-      for (var i = 1; i < pins.length; i++) {
-        pins[i].classList.remove('hidden');
-      }
     }
   };
 
   var onMainPinEnterPress = function (evt) {
     if ((window.variables.mainPin === document.activeElement) && (evt.key === 'Enter')) {
       renderActiveCondition();
-      for (var i = 1; i < pins.length; i++) {
-        pins[i].classList.remove('hidden');
-      }
     }
   };
 
@@ -160,50 +154,53 @@
     element.remove();
     form.reset();
     renderNonActiveCondition();
-    for (var i = 1; i < pins.length; i ++) {
-      pins[i].classList.add('hidden');
+    var pins = Array.from(document.querySelectorAll('.map__pin'));
+    pins.forEach(function (item, i) {
+      if (pins[i].classList.contains('map__pin--main')) {
+        return;
+      }
+      pins[i].remove();
+    });
+    if (document.querySelector('.map__card')) {
+      document.querySelector('.map__card').remove();
     }
-    if (document.querySelector('.card')) {
-      document.querySelector('.card').remove();
-    }
-  }
+  };
   var removeMessegeOnEsc = function (element, evt) {
-     if (evt.key === 'Escape') {
-      removeMessage(element)
+    if (evt.key === 'Escape') {
+      removeMessage(element);
     }
     document.removeEventListener('keydown', removeMessegeOnEsc);
-  }
+  };
 
   var onSuccess = function () {
-      var newTemplate = document.querySelector('#success').content.querySelector('div');
-      var messege = newTemplate.cloneNode(true);
-      messege.children.textContent = document.querySelector('.success__message');
-      document.querySelector('main').appendChild(messege);
-       messege.addEventListener('click', function () {
-        removeMessage(messege);
-      });
-      removeMessegeOnEsc = removeMessegeOnEsc.bind(null, messege);
-      document.addEventListener('keydown', removeMessegeOnEsc);
+    var newTemplate = document.querySelector('#success').content.querySelector('div');
+    var messege = newTemplate.cloneNode(true);
+    messege.children.textContent = document.querySelector('.success__message');
+    document.querySelector('main').appendChild(messege);
+    messege.addEventListener('click', function () {
+      removeMessage(messege);
+    });
+    removeMessegeOnEsc = removeMessegeOnEsc.bind(null, messege);
+    document.addEventListener('keydown', removeMessegeOnEsc);
 
   };
 
   var onError = function () {
     var newTemplate = document.querySelector('#error').content.querySelector('div');
-    var  errorContainer = newTemplate.cloneNode(true);
+    var errorContainer = newTemplate.cloneNode(true);
     errorContainer.querySelector('.error__message').textContent = 'Ошибка загрузки объявления';
     errorContainer.querySelector('.error__button').textContent = 'Попробовать снова';
     document.querySelector('main').appendChild(errorContainer);
     errorContainer.addEventListener('click', function () {
-        removeMessage(errorContainer);
-      });
-      removeMessegeOnEsc = removeMessegeOnEsc.bind(null, errorContainer);
-      errorContainer.addEventListener('keydown', removeMessegeOnEsc);
-  }
-  
+      removeMessage(errorContainer);
+    });
+    removeMessegeOnEsc = removeMessegeOnEsc.bind(null, errorContainer);
+    errorContainer.addEventListener('keydown', removeMessegeOnEsc);
+  };
+
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.upload(new FormData(form), onSuccess, onError);
-})
-
+  });
 })();
 

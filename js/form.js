@@ -46,16 +46,19 @@
 
   var onMainPinClick = function (evt) {
     if (evt.button === 0) {
-      renderActiveCondition();
+      if (window.variables.map.classList.contains('map--faded')) {
+        renderActiveCondition();
+      }
     }
   };
 
   var onMainPinEnterPress = function (evt) {
-    if ((window.variables.mainPin === document.activeElement) && (evt.key === 'Enter')) {
-      renderActiveCondition();
+    if (window.variables.map.classList.contains('map--faded')) {
+      if ((window.variables.mainPin === document.activeElement) && (evt.key === 'Enter')) {
+        renderActiveCondition();
+      }
     }
   };
-
   window.variables.mainPin.addEventListener('mousedown', onMainPinClick);
   window.variables.mainPin.addEventListener('keydown', onMainPinEnterPress);
 

@@ -76,30 +76,27 @@
       closePopUp();
     }
   };
-  var onPinClick = function (advertisements, evt) {
-    if (window.variables.map.classList.contains('map--faded')) {
-      return;
-    }
-    var pin = evt.target.closest('.map__pin');
-    if ((!pin) || (pin.classList.contains('map__pin--main'))) {
-      return;
-    }
-    if (document.querySelector('.map__card')) {
-      closePopUp();
-    }
-    var j = pin.dataset.index;
-    addAdvertismentCard(advertisements[j]);
-    var cardClose = document.querySelector('.popup__close');
-    cardClose.addEventListener('click', function () {
-      closePopUp();
-    });
-    document.addEventListener('keydown', onClosePopUpEsc);
-  };
-
-
   window.onSuccess = function (advertisements) {
     renderAdvertismentPins(advertisements);
-    onPinClick = onPinClick.bind(null, advertisements);
+    var onPinClick = function (evt) {
+      if (window.variables.map.classList.contains('map--faded')) {
+        return;
+      }
+      var pin = evt.target.closest('.map__pin');
+      if ((!pin) || (pin.classList.contains('map__pin--main'))) {
+        return;
+      }
+      if (document.querySelector('.map__card')) {
+        closePopUp();
+      }
+      var j = pin.dataset.index;
+      addAdvertismentCard(advertisements[j]);
+      var cardClose = document.querySelector('.popup__close');
+      cardClose.addEventListener('click', function () {
+        closePopUp();
+      });
+      document.addEventListener('keydown', onClosePopUpEsc);
+    };
     window.variables.mapPinsBlock.addEventListener('click', onPinClick);
   };
   window.load(window.onSuccess);

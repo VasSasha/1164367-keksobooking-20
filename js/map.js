@@ -97,12 +97,12 @@
   };
 
 
-  var onSuccess = function (advertisements) {
+  window.onSuccess = function (advertisements) {
     renderAdvertismentPins(advertisements);
     onPinClick = onPinClick.bind(null, advertisements);
-      window.variables.mapPinsBlock.addEventListener('click', onPinClick);
+    window.variables.mapPinsBlock.addEventListener('click', onPinClick);
   };
-  window.load(onSuccess);
+  window.load(window.onSuccess);
   var mainPin = window.variables.mainPin;
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();

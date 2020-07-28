@@ -10,7 +10,7 @@
     }
     var fragment = document.createDocumentFragment();
     var template = document.querySelector('#pin').content;
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < advertisements.length; i++) {
       var newAdd = template.cloneNode(true);
       var btn = newAdd.querySelector('.map__pin');
       var img = newAdd.querySelector('img');
@@ -102,8 +102,18 @@
     };
     window.variables.mapPinsBlock.addEventListener('click', onPinClick);
   };
+<<<<<<< Updated upstream
   window.load(onAdvertisementsLoad);
 
+=======
+  window.load(window.map.onAdvertisementsLoad);
+  window.map = {
+    onAdvertisementsLoad: onAdvertisementsLoad,
+    renderAdvertismentPins: renderAdvertismentPins,
+    addAdvertismentCard: addAdvertismentCardб
+    onAdvertisementsLoad: onAdvertisementsLoad
+  };
+>>>>>>> Stashed changes
   var mainPin = window.variables.mainPin;
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();

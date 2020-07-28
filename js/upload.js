@@ -9,10 +9,10 @@
     xhr.send(data);
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-    	onSuccess();
-    } else {
-    	  onError();
-    }
+        onSuccess();
+      } else {
+        onError();
+      }
     });
   };
 })();

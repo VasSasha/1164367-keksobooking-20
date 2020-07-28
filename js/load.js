@@ -11,6 +11,7 @@
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
         window.map.onAdvertisementsLoad(xhr.response);
+
       } /* else {
     		onError('Статус ответа: ' + xhr.status);
     	}*/

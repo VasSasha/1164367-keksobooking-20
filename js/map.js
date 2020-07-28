@@ -5,6 +5,9 @@
   var PIN_HEIGHT = 70;
 
   var renderAdvertismentPins = function (advertisements) {
+    if (window.variables.map.classList.contains('map--faded')) {
+      return;
+    }
     var fragment = document.createDocumentFragment();
     var template = document.querySelector('#pin').content;
     for (var i = 0; i < 6; i++) {
@@ -20,6 +23,7 @@
     }
     window.variables.mapPinsBlock.appendChild(fragment);
   };
+
   // переводит тип жилья
   var translateAccomodationType = function (type) {
     var newType;
@@ -75,30 +79,33 @@
       closePopUp();
     }
   };
-  var onPinClick = function (advertisements, evt) {
-    var pin = evt.target.closest('.map__pin');
-    if ((!pin) || (pin.classList.contains('map__pin--main'))) {
-      return;
-    }
-    if (document.querySelector('.map__card')) {
-      closePopUp();
-    }
-    var j = pin.dataset.index;
-    addAdvertismentCard(advertisements[j]);
-    var cardClose = document.querySelector('.popup__close');
-    cardClose.addEventListener('click', function () {
-      closePopUp();
-    });
-    document.addEventListener('keydown', onClosePopUpEsc);
-  };
-
-
-  var onSuccess = function (advertisements) {
+  var onAdvertisementsLoad = function (advertisements) {
     renderAdvertismentPins(advertisements);
-    onPinClick = onPinClick.bind(null, advertisements);
+    var onPinClick = function (evt) {
+      if (window.variables.map.classList.contains('map--faded')) {
+        return;
+      }
+      var pin = evt.target.closest('.map__pin');
+      if ((!pin) || (pin.classList.contains('map__pin--main'))) {
+        return;
+      }
+      if (document.querySelector('.map__card')) {
+        closePopUp();
+      }
+      var j = pin.dataset.index;
+      addAdvertismentCard(advertisements[j]);
+      var cardClose = document.querySelector('.popup__close');
+      cardClose.addEventListener('click', function () {
+        closePopUp();
+      });
+      document.addEventListener('keydown', onClosePopUpEsc);
+    };
     window.variables.mapPinsBlock.addEventListener('click', onPinClick);
   };
-  window.load(onSuccess);
+  window.map = {
+    onAdvertisementsLoad: onAdvertisementsLoad,
+  };
+  window.load(window.map.onAdvertisementsLoad);
   var mainPin = window.variables.mainPin;
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();

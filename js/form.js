@@ -3,7 +3,7 @@
 
 (function () {
   var adFieldsets = document.querySelectorAll('.ad-form fieldset');
-  var mapFilters = document.querySelector('.map__filters fieldset');
+  var mapFilters = document.querySelectorAll('.map__filters fieldset');
   var adForm = document.querySelector('.ad-form');
   // блокирует формы
   var getFormsBlocked = function (arr) {
@@ -38,23 +38,27 @@
     getFormsUnblocked(mapFilters);
     window.variables.map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
+    window.variables.map.classList.add('map--active');
     var addressInput = document.querySelector('#address');
-    addressInput.setAttribute('disabled', true);
-
+    addressInput.setAttribute('readonly', true);
+    window.load(window.onSuccess);
   };
 
   var onMainPinClick = function (evt) {
     if (evt.button === 0) {
-      renderActiveCondition();
+      if (window.variables.map.classList.contains('map--faded')) {
+        renderActiveCondition();
+      }
     }
   };
 
   var onMainPinEnterPress = function (evt) {
-    if ((window.variables.mainPin === document.activeElement) && (evt.key === 'Enter')) {
-      renderActiveCondition();
+    if (window.variables.map.classList.contains('map--faded')) {
+      if ((window.variables.mainPin === document.activeElement) && (evt.key === 'Enter')) {
+        renderActiveCondition();
+      }
     }
   };
-
   window.variables.mainPin.addEventListener('mousedown', onMainPinClick);
   window.variables.mainPin.addEventListener('keydown', onMainPinEnterPress);
 
@@ -148,6 +152,58 @@
   var imgOfHost = document.querySelector('#avatar');
   imgOfHost.setAttribute('accept', 'image/*');
   imgOfHouse.setAttribute('accept', 'image/*');
+  var form = document.querySelector('.ad-form');
+  var removeMessage = function (element) {
+    element.remove();
+    form.reset();
+    renderNonActiveCondition();
+    var pins = Array.from(document.querySelectorAll('.map__pin'));
+    pins.forEach(function (item, i) {
+      if (pins[i].classList.contains('map__pin--main')) {
+        return;
+      }
+      pins[i].remove();
+    });
+    if (document.querySelector('.map__card')) {
+      document.querySelector('.map__card').remove();
+    }
+  };
+  var removeMessegeOnEsc = function (element, evt) {
+    if (evt.key === 'Escape') {
+      removeMessage(element);
+    }
+    document.removeEventListener('keydown', removeMessegeOnEsc);
+  };
 
+  var onSuccess = function () {
+    var newTemplate = document.querySelector('#success').content.querySelector('div');
+    var messege = newTemplate.cloneNode(true);
+    messege.children.textContent = document.querySelector('.success__message');
+    document.querySelector('main').appendChild(messege);
+    messege.addEventListener('click', function () {
+      removeMessage(messege);
+    });
+    removeMessegeOnEsc = removeMessegeOnEsc.bind(null, messege);
+    document.addEventListener('keydown', removeMessegeOnEsc);
+
+  };
+
+  var onError = function () {
+    var newTemplate = document.querySelector('#error').content.querySelector('div');
+    var errorContainer = newTemplate.cloneNode(true);
+    errorContainer.querySelector('.error__message').textContent = 'Ошибка загрузки объявления';
+    errorContainer.querySelector('.error__button').textContent = 'Попробовать снова';
+    document.querySelector('main').appendChild(errorContainer);
+    errorContainer.addEventListener('click', function () {
+      removeMessage(errorContainer);
+    });
+    removeMessegeOnEsc = removeMessegeOnEsc.bind(null, errorContainer);
+    errorContainer.addEventListener('keydown', removeMessegeOnEsc);
+  };
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.upload(new FormData(form), onSuccess, onError);
+  });
 })();
 

@@ -101,7 +101,7 @@
     window.variables.mapPinsBlock.addEventListener('click', onPinClick);
     housingType.addEventListener('change', onTypeChange);
   };
-  var wrapTypeHandler = function (advertisements) {
+  var getData = function (advertisements) {
     window.advertisementsArray = advertisements;
   };
   var onTypeChange = function () {
@@ -122,7 +122,7 @@
     onAdvertisementsLoad(newPins);
     window.renderAdvertismentPins(newPins);
   };
-  window.load(onAdvertisementsLoad, wrapTypeHandler);
+  window.load(onAdvertisementsLoad, getData);
   var mainPin = window.variables.mainPin;
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();

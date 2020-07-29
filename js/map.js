@@ -101,6 +101,7 @@
     window.variables.mapPinsBlock.addEventListener('click', onPinClick);
     housingType.addEventListener('change', onTypeChange);
   };
+
   var getData = function (advertisements) {
     window.advertisementsArray = advertisements;
   };

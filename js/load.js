@@ -2,6 +2,7 @@
 
 (function () {
   var URL = 'https://javascript.pages.academy/keksobooking/data';
+
   window.load = function (onSuccess, getData) {
     var xhr = new XMLHttpRequest();
 

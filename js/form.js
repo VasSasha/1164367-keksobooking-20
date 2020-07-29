@@ -41,6 +41,7 @@
     window.variables.map.classList.add('map--active');
     var addressInput = document.querySelector('#address');
     addressInput.setAttribute('readonly', true);
+    window.renderAdvertismentPins(window.advertisementsArray);
   };
 
   var onMainPinClick = function (evt) {
